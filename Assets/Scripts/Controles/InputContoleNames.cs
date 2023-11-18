@@ -2,12 +2,10 @@
 {
     public static class InputContoleNames
     {
-        public const string SPACE = "space";
-        public const string UP = "space";
-        public const string DOWN = "right";
-        public const string LEFT = "space";
-        public const string RIGHT = "right";
-        public const string SHIFT = "shift";
-        public const string E = "e";
+        public const string SPACE = "Jump";
+        public const string VERTICAL = "Vertical";
+        public const string HORIZONTAL = "Horizontal";
+        public const string SHIFT = "Shift";
+        public const string E = "Interact";
     }
 }

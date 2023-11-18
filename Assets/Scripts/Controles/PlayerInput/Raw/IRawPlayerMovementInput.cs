@@ -1,6 +1,6 @@
 ﻿namespace CG.Scripts.Controles.PlayerInput
 {
-    public interface IRawPlayerAxisInput
+    public interface IRawPlayerMovementInput
     {
         public float Vertical
         {

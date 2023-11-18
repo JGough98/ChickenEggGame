@@ -3,17 +3,15 @@ using CG.Scripts.Controles.InputReader;
 
 namespace CG.Scripts.Controles.PlayerInput
 {
-    public class PlayerInput : IPlayerInput
+    public class RawPlayerInput : IRawPlayerInput
     {
         private IInputReader<bool> jumpRead;
         private IInputReader<bool> glidingRead;
         private IInputReader<bool> isSprintingRead;
         private IInputReader<bool> layEggRead;
 
-        private IInputReader<float> moveUp;
-        private IInputReader<float> moveDown;
-        private IInputReader<float> moveLeft;
-        private IInputReader<float> moveRight;
+        private IInputReader<float> vertical;
+        private IInputReader<float> horizontal;
 
 
         // Will need editing, there is diffrence between small and large jump
@@ -22,30 +20,24 @@ namespace CG.Scripts.Controles.PlayerInput
         public bool IsRunning => isSprintingRead.Value;
         public bool LayEgg => layEggRead.Value;
 
-        public float Up => moveUp.Value;
-        public float Down => moveDown.Value;
-        public float Left => moveLeft.Value;
-        public float Right => moveRight.Value;
+        public float Vertical => vertical.Value;
+        public float Horizontal => horizontal.Value;
 
 
-        public PlayerInput(
+        public RawPlayerInput(
             string jumpKey = InputContoleNames.SPACE,
             string glidingKey = InputContoleNames.SPACE,
             string sprintKey = InputContoleNames.SHIFT,
             string layEggKey = InputContoleNames.E,
-            string moveUpKey = InputContoleNames.UP,
-            string moveDownKey = InputContoleNames.DOWN,
-            string moveLeftKey = InputContoleNames.LEFT,
-            string moveRightKey = InputContoleNames.RIGHT)
+            string verticalKey = InputContoleNames.VERTICAL,
+            string horizontalKey = InputContoleNames.HORIZONTAL)
         {
             jumpRead = new ButtonDownRead(jumpKey);
             glidingRead = new ButtonDownRead(glidingKey);
             isSprintingRead = new ButtonRead(sprintKey);
             layEggRead = new ButtonDownRead(layEggKey);
-            moveUp = new AxisRead(moveUpKey);
-            moveDown = new AxisRead(moveDownKey);
-            moveLeft = new AxisRead(moveLeftKey);
-            moveRight = new AxisRead(moveRightKey);
+            vertical = new AxisRead(verticalKey);
+            horizontal = new AxisRead(horizontalKey);
         }
     }
 }

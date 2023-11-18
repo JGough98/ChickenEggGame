@@ -1,24 +1,93 @@
+using CG.Scripts.Controles.PlayerInput;
+using CG.Scripts.Controles.PlayerInput.Interpreted;
 using UnityEngine;
 
-// Maybe start by trying to add controles and get it moving left right etc, in accordance to camera.
-// Then try adding a new speed when pressing x, which makes the chicken swich to the running animation.
-// Then we can try adding the egg respawn script and a respawn animation.
-// Start with a cube egg.
-// And do the respawn logic stuff.
-// Then we need to think of adding a jump.
-// Could try making simple animation too.
 
-public class PlayerController : MonoBehaviour
+namespace CG.Scripts
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerController : MonoBehaviour
     {
-        
-    }
+        [SerializeField]
+        private Rigidbody rb;
+        [SerializeField]
+        private Transform camera;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        [SerializeField]
+        private float speed;
+        [SerializeField]
+        private float maxRunningSpeed;
+        [SerializeField]
+        private float runningSpeedAccelaration;
+        [SerializeField]
+        private float jumpForce;
+        [SerializeField]
+        private float roatationSpeed;
+
+        private float currentSpeed;
+
+        private IPlayerInput playerInput;
+
+
+        private Vector3 PlayerDirection => playerInput.MovementDirection(camera.forward, camera.right);
+
+
+        private void Awake()
+        {
+            playerInput = new InterpretedPlayerInput(new RawPlayerInput());
+        }
+
+
+        void Start()
+        {
+
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            var playerDirection = PlayerDirection;
+            
+            Rotate(playerDirection);
+            Move(playerDirection);
+            if (playerInput.Jump)
+            {
+                Jump();
+            }
+        }
+
+        private void Rotate(Vector3 playerDirection)
+        {
+            var rotateStep = roatationSpeed * Time.deltaTime;
+            var newDirection = Vector3.RotateTowards(transform.forward, playerDirection, rotateStep, 0f);
+            transform.rotation = Quaternion.LookRotation(newDirection);
+        }
+
+        private void Move(Vector3 playerDirection)
+        {
+            var playerMovement = playerDirection * GetSpeed() * Time.deltaTime;
+            playerMovement.y = rb.velocity.y;
+            rb.velocity = playerMovement;
+        }
+
+        private void Jump()
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
+
+        private float GetSpeed()
+        {
+            if (playerInput.IsRunning)
+            {
+                currentSpeed += runningSpeedAccelaration * Time.deltaTime;
+                currentSpeed = Mathf.Clamp(currentSpeed, 0, maxRunningSpeed);
+            }
+            else
+            {
+                currentSpeed = speed;
+            }
+            Debug.Log(currentSpeed);
+            return currentSpeed;
+        }
     }
 }
