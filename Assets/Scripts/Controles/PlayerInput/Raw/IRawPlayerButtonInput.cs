@@ -1,20 +1,22 @@
-﻿namespace CG.Scripts.Controles.PlayerInput
+﻿using CG.Scripts.Controles.InputReader;
+
+namespace CG.Scripts.Controles.PlayerInput
 {
     public interface IRawPlayerButtonInput
     {
-        public bool Jump
+        public IInputReader<bool> Jump
         {
             get;
         }
-        public bool IsGliding
+        public IInputReader<bool> IsGliding
         {
             get;
         }
-        public bool IsRunning
+        public IInputReader<bool> IsRunning
         {
             get;
         }
-        public bool LayEgg
+        public IInputReader<bool> LayEgg
         {
             get;
         }

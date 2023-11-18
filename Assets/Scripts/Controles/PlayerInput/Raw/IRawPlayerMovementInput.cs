@@ -1,12 +1,15 @@
-﻿namespace CG.Scripts.Controles.PlayerInput
+﻿using CG.Scripts.Controles.InputReader;
+
+
+namespace CG.Scripts.Controles.PlayerInput
 {
     public interface IRawPlayerMovementInput
     {
-        public float Vertical
+        public IInputReader<float> Vertical
         {
             get;
         }
-        public float Horizontal
+        public IInputReader<float> Horizontal
         {
             get;
         }

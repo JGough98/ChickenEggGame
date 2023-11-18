@@ -1,5 +1,7 @@
-namespace CG.Scripts.Controles.PlayerInput
+namespace CG.Scripts.Controles.PlayerInput.Interpreted
 {
-    public interface IPlayerInput : IRawPlayerButtonInput, IInturprettedPlayerMovementDirection
-    { }
+    public interface IPlayerInput : IInterpretedButtonInput, IInturprettedPlayerMovementDirection
+    {
+        public void Update();
+    }
 }

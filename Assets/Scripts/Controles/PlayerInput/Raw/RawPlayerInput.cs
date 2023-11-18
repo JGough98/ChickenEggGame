@@ -14,14 +14,14 @@ namespace CG.Scripts.Controles.PlayerInput
         private IInputReader<float> horizontal;
 
 
-        // Will need editing, there is diffrence between small and large jump
-        public bool Jump => jumpRead.Value;
-        public bool IsGliding => glidingRead.Value;
-        public bool IsRunning => isSprintingRead.Value;
-        public bool LayEgg => layEggRead.Value;
+        public IInputReader<float> Vertical => vertical;
+        public IInputReader<float> Horizontal => horizontal;
 
-        public float Vertical => vertical.Value;
-        public float Horizontal => horizontal.Value;
+        // Will need editing, there is diffrence between small and large jump
+        public IInputReader<bool> Jump => jumpRead;
+        public IInputReader<bool> IsGliding => glidingRead;
+        public IInputReader<bool> IsRunning => isSprintingRead;
+        public IInputReader<bool> LayEgg => layEggRead;
 
 
         public RawPlayerInput(

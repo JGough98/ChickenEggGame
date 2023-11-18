@@ -43,13 +43,13 @@ namespace CG.Scripts
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
             var playerDirection = PlayerDirection;
             
             Rotate(playerDirection);
             Move(playerDirection);
-            if (playerInput.Jump)
+            if (playerInput.Jump.Tapped)
             {
                 Jump();
             }

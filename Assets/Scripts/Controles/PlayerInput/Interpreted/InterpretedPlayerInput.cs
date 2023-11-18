@@ -11,20 +11,32 @@ namespace CG.Scripts.Controles.PlayerInput.Interpreted
     {
         private IRawPlayerInput rawPlayerInput;
 
+        private IConfirmTap jump;
+        private IConfirmTap layEgg;
 
-        public bool Jump => rawPlayerInput.Jump;
-        public bool IsGliding => rawPlayerInput.IsGliding;
-        public bool IsRunning => rawPlayerInput.IsRunning;
-        public bool LayEgg => rawPlayerInput.LayEgg;
+        public IConfirmTap Jump => jump;
+        public IConfirmTap LayEgg => layEgg;
+
+        public bool IsGliding => rawPlayerInput.IsGliding.Value;
+        public bool IsRunning => rawPlayerInput.IsRunning.Value;
 
 
         public InterpretedPlayerInput(IRawPlayerInput rawPlayerInput)
         {
             this.rawPlayerInput = rawPlayerInput;
+
+            jump = new ConfirmTap(rawPlayerInput.Jump);
+            layEgg = new ConfirmTap(rawPlayerInput.LayEgg);
         }
 
 
         public Vector3 MovementDirection(Vector3 camraForward, Vector3 cameraRight)
-            => ((rawPlayerInput.Horizontal * cameraRight) + (rawPlayerInput.Vertical * camraForward));
+            => ((rawPlayerInput.Horizontal.Value * cameraRight) + (rawPlayerInput.Vertical.Value * camraForward));
+
+        public void Update()
+        {
+            jump.Update();
+            layEgg.Update();
+        }
     }
 }
