@@ -42,6 +42,11 @@ namespace CG.Scripts
 
         }
 
+        private void Update()
+        {
+            playerInput.Update();
+        }
+
         // Update is called once per frame
         void FixedUpdate()
         {
