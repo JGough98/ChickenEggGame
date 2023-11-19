@@ -1,3 +1,4 @@
+using CG.ScriptableObjects.Scripts;
 using CG.Scripts.Controles.PlayerInput;
 using CG.Scripts.Controles.PlayerInput.Interpreted;
 using UnityEngine;
@@ -8,12 +9,18 @@ namespace CG.Scripts
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]
-        private Rigidbody rb;
+        private Rigidbody rigidbody;
+        
         [SerializeField]
         private Transform camera;
 
+        [SerializeReference]
+        private DirectionalRayCollision groundCollision;
+
         [SerializeField]
-        private float speed;
+        private float roatationSpeed;
+        [SerializeField]
+        private float walkingSpeed;
         [SerializeField]
         private float maxRunningSpeed;
         [SerializeField]
@@ -21,25 +28,42 @@ namespace CG.Scripts
         [SerializeField]
         private float jumpForce;
         [SerializeField]
-        private float roatationSpeed;
+        private JumpConfiguration jumpConfiguration;
+
+        private int currentJumpCount;
 
         private float currentSpeed;
 
         private IPlayerInput playerInput;
 
 
-        private Vector3 PlayerDirection => playerInput.MovementDirection(camera.forward, camera.right);
+        private Vector3 PlayerDirection => playerInput.MovementDirection(
+            camera.forward,
+            camera.right);
+
+        private bool CanJump
+        {
+            get
+            {
+                if(!playerInput.Jump.Tapped)
+                {
+                    return false;
+                }
+                else if (groundCollision.Collided)
+                {
+                    currentJumpCount = jumpConfiguration.JumpCount;
+                    return true;
+                }
+
+                currentJumpCount--;
+                return currentJumpCount >= 0;
+            }
+        }
 
 
         private void Awake()
         {
             playerInput = new InterpretedPlayerInput(new RawPlayerInput());
-        }
-
-
-        void Start()
-        {
-
         }
 
         private void Update()
@@ -54,7 +78,8 @@ namespace CG.Scripts
             
             Rotate(playerDirection);
             Move(playerDirection);
-            if (playerInput.Jump.Tapped)
+
+            if (CanJump)
             {
                 Jump();
             }
@@ -70,14 +95,18 @@ namespace CG.Scripts
         private void Move(Vector3 playerDirection)
         {
             var playerMovement = playerDirection * GetSpeed() * Time.deltaTime;
-            playerMovement.y = rb.velocity.y;
-            rb.velocity = playerMovement;
+            playerMovement.y = rigidbody.velocity.y;
+            rigidbody.velocity = playerMovement;
         }
 
         private void Jump()
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            var currentJumpForce = jumpForce * jumpConfiguration[jumpConfiguration.JumpCount - currentJumpCount];
+
+            //
+
+
+            rigidbody.AddForce(transform.up * currentJumpForce, ForceMode.Impulse);
         }
 
         private float GetSpeed()
@@ -89,9 +118,9 @@ namespace CG.Scripts
             }
             else
             {
-                currentSpeed = speed;
+                currentSpeed = walkingSpeed;
             }
-            Debug.Log(currentSpeed);
+            //Debug.Log(currentSpeed);
             return currentSpeed;
         }
     }

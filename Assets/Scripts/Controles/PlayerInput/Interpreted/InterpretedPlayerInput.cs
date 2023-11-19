@@ -25,8 +25,8 @@ namespace CG.Scripts.Controles.PlayerInput.Interpreted
         {
             this.rawPlayerInput = rawPlayerInput;
 
-            jump = new ConfirmTap(rawPlayerInput.Jump);
-            layEgg = new ConfirmTap(rawPlayerInput.LayEgg);
+            jump = new QuedConfirmedTap(rawPlayerInput.Jump);
+            layEgg = new QuedConfirmedTap(rawPlayerInput.LayEgg);
         }
 
 
