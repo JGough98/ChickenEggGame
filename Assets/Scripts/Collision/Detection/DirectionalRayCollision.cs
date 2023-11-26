@@ -2,9 +2,9 @@
 using UnityEngine;
 
 
-namespace CG.Scripts
+namespace CG.Scripts.Collision.Detection
 {
-    public class DirectionalRayCollision : MonoBehaviour
+    public class DirectionalRayCollision : MonoBehaviour, IDirectionalCollision
     {
         [SerializeField]
         private Transform taregt;

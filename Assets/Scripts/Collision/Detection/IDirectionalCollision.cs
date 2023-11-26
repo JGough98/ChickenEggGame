@@ -1,4 +1,4 @@
-﻿namespace CG.Scripts
+﻿namespace CG.Scripts.Collision.Detection
 {
     public interface IDirectionalCollision
     {

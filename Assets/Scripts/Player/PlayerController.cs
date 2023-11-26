@@ -1,6 +1,8 @@
 using CG.ScriptableObjects.Scripts;
+using CG.Scripts.Collision.Detection;
 using CG.Scripts.Controles.PlayerInput;
 using CG.Scripts.Controles.PlayerInput.Interpreted;
+using CG.Scripts.Mechanics.Spawn;
 using UnityEngine;
 
 
@@ -29,6 +31,11 @@ namespace CG.Scripts
         private float jumpForce;
         [SerializeField]
         private JumpConfiguration jumpConfiguration;
+        [SerializeField]
+        private SpawnPostionManager spawnPostion;
+        [SerializeField]
+        private EggSpawn eggSpawn;
+
 
         private int currentJumpCount;
 
@@ -45,7 +52,7 @@ namespace CG.Scripts
         {
             get
             {
-                if(!playerInput.Jump.Tapped)
+                if(!playerInput.Jump)
                 {
                     return false;
                 }
@@ -56,7 +63,7 @@ namespace CG.Scripts
                 }
 
                 currentJumpCount--;
-                return currentJumpCount >= 0;
+                return currentJumpCount > 0;
             }
         }
 
@@ -83,6 +90,11 @@ namespace CG.Scripts
             {
                 Jump();
             }
+
+            if(playerInput.LayEgg)
+            {
+                eggSpawn.TryAddEgg();
+            }
         }
 
         private void Rotate(Vector3 playerDirection)
@@ -103,8 +115,6 @@ namespace CG.Scripts
         {
             var currentJumpForce = jumpForce * jumpConfiguration[jumpConfiguration.JumpCount - currentJumpCount];
 
-            //
-
 
             rigidbody.AddForce(transform.up * currentJumpForce, ForceMode.Impulse);
         }
@@ -120,7 +130,7 @@ namespace CG.Scripts
             {
                 currentSpeed = walkingSpeed;
             }
-            //Debug.Log(currentSpeed);
+
             return currentSpeed;
         }
     }
