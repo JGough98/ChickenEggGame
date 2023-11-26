@@ -14,9 +14,8 @@ namespace CG.Scripts.Controles.PlayerInput.Interpreted
         private IConfirmTap jump;
         private IConfirmTap layEgg;
 
-        public IConfirmTap Jump => jump;
-        public IConfirmTap LayEgg => layEgg;
-
+        public bool Jump => jump.Tapped;
+        public bool LayEgg => layEgg.Tapped;
         public bool IsGliding => rawPlayerInput.IsGliding.Value;
         public bool IsRunning => rawPlayerInput.IsRunning.Value;
 

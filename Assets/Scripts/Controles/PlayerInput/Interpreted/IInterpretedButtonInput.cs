@@ -2,11 +2,11 @@ namespace CG.Scripts.Controles.PlayerInput.Interpreted
 {
     public interface IInterpretedButtonInput
     {
-        public IConfirmTap Jump
+        public bool Jump
         {
             get;
         }
-        public IConfirmTap LayEgg
+        public bool LayEgg
         {
             get;
         }
