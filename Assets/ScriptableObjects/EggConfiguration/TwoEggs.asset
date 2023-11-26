@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ad677cb1b9c384f91de02976cc3635, type: 3}
+  m_Name: TwoEggs
+  m_EditorClassIdentifier: 
+  eggPrefab: {fileID: 1270432792996413882, guid: 5e21a1a8986b97f479c73437ca40a633, type: 3}
+  eggCount: 2
