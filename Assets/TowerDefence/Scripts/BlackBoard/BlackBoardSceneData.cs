@@ -20,7 +20,7 @@ namespace Assets.TowerDefence.Scripts.BlackBoard
 		private List<DepositDropOff> dropOffs;
 
 
-		public IReadOnlyList<RecourseDeposit> Recourses => Recourses;
+		public IReadOnlyList<RecourseDeposit> Recourses => recourses;
 
 		public IReadOnlyList<Drone> Drones => drones;
 

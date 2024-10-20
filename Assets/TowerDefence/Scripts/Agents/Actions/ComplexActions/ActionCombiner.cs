@@ -23,6 +23,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 		public ActionCombiner(Queue<(IAction performingAction, Action start)> actions)
 		{
 			combinedActions = actions;
+			StartNextAction();
 		}
 
 

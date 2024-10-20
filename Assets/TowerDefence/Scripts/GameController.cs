@@ -12,7 +12,7 @@ namespace Assets.TowerDefence.Scripts
 	using Assets.TowerDefence.Scripts.Enums;
 	using BlackBoard;
 
-
+	[RequireComponent(typeof(BlackBoardController))]
 	public class GameController : MonoBehaviour
 	{
 		[SerializeField]
@@ -33,7 +33,11 @@ namespace Assets.TowerDefence.Scripts
 
 			moveAction.Intialize(navMeshAgent);
 
-			goCollectRecourses.Intialize(new CollectAllRecoursesOfTypeIntializeData(moveAction, collectRecourse, blackBoard.Data));
+			goCollectRecourses.Intialize(
+				new CollectAllRecoursesOfTypeIntializeData(
+					moveAction,
+					collectRecourse,
+					blackBoard.Data));
 
 			goCollectRecourses.Start(new CollectAllRecoursesOfTypeInstructionsData(ERecourseType.IRON, navMeshAgent));
 		}
@@ -42,6 +46,12 @@ namespace Assets.TowerDefence.Scripts
 		public void FixedUpdate()
 		{
 			goCollectRecourses.Perform();
+		}
+
+		public void Reset()
+		{
+			blackBoard = gameObject.GetComponent<BlackBoardController>();
+			blackBoard.Reset();
 		}
 	}
 }

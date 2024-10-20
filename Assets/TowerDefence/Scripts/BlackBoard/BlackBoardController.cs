@@ -19,6 +19,7 @@ namespace Assets.TowerDefence.Scripts.BlackBoard
 		public void Reset()
 		{
 			sceneData = gameObject.GetComponent<BlackBoardSceneData>();
+			sceneData.Reset();
 		}
 	}
 }
