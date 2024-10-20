@@ -4,66 +4,78 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
+using UnityObject = UnityEngine.Object;
+using Object = System.Object;
 
-public static class ReflectionUtility
+
+namespace Assets.TowerDefence.Scripts.Utility
 {
-	public static void SerializeAllListsWithValuesFromScene(
-		System.Object obj)
+	public static class ReflectionUtility
 	{
-		var baseTypeFeildInfos = obj.GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
-
-		foreach (var baseFieldInfo in baseTypeFeildInfos)
+		public static void SerializeAllListsWithValuesFromScene(
+			Object obj,
+			params BindingFlags[] bindingFlags)
 		{
-			if (IsGenericList(baseFieldInfo) && GetListMonoBehaviourGenericType(baseFieldInfo, out var genericType))
+			var baseTypeFeildInfos = obj
+				.GetType()
+				.GetFields(bindingFlags.Aggregate((x, y) => x | y));
+
+			foreach (var baseFieldInfo in baseTypeFeildInfos)
 			{
-				AssignListValues(
-					new object[] { UnityEngine.Object.FindObjectsOfType(genericType) },
-					genericType,
-					baseFieldInfo,
-					obj);
+				if (IsGenericList(baseFieldInfo)
+					&& GetListMonoBehaviourGenericType(baseFieldInfo, out var genericType))
+				{
+					AssignListValues(
+						new object[]
+						{
+						UnityObject.FindObjectsOfType(genericType)
+						},
+						genericType,
+						baseFieldInfo,
+						obj);
+				}
 			}
 		}
-	}
 
-	public static bool IsGenericList(FieldInfo fieldInfo)
-		=> fieldInfo.FieldType.IsGenericType && fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(List<>);
+		public static bool IsGenericList(FieldInfo fieldInfo)
+			=> fieldInfo.FieldType.IsGenericType && fieldInfo.FieldType.GetGenericTypeDefinition() == typeof(List<>);
 
-	public static void AssignListValues(
-		object[] newValues,
-		Type genericType,
-		FieldInfo listField,
-		System.Object orginalObject)
-	{
-		var typedList = Activator.CreateInstance(typeof(List<>).MakeGenericType(genericType));
-		var addRangeMethod = typedList.GetType().GetMethod("AddRange");
-		addRangeMethod.Invoke(typedList, newValues);
-		listField.SetValue(orginalObject, typedList);
-	}
-
-	public static bool GetListMonoBehaviourGenericType(
-		FieldInfo fieldInfo,
-		out Type genericType)
-	{
-		genericType = null;
-		var allGenericArguments = fieldInfo.FieldType.GetGenericArguments();
-
-		if (allGenericArguments.Count() > 1)
+		public static void AssignListValues(
+			object[] newValues,
+			Type genericType,
+			FieldInfo listField,
+			Object orginalObject)
 		{
-			Debug.LogError($"Serializer cannot handle multiple generic arguments, violating Field Name : {fieldInfo.FieldType.Name}");
-
-			return false;
+			var typedList = Activator.CreateInstance(typeof(List<>).MakeGenericType(genericType));
+			var addRangeMethod = typedList.GetType().GetMethod("AddRange");
+			addRangeMethod.Invoke(typedList, newValues);
+			listField.SetValue(orginalObject, typedList);
 		}
 
-		genericType = allGenericArguments[0];
-		var isMonoBehaviour = genericType.IsSubclassOf(typeof(MonoBehaviour));
-
-		if (!genericType.IsSubclassOf(typeof(MonoBehaviour)))
+		public static bool GetListMonoBehaviourGenericType(
+			FieldInfo fieldInfo,
+			out Type genericType)
 		{
-			Debug.LogError($"Generic type is not of type {typeof(MonoBehaviour).Name}.");
-			return false;
-		}
+			genericType = null;
+			var allGenericArguments = fieldInfo.FieldType.GetGenericArguments();
 
-		return isMonoBehaviour;
+			if (allGenericArguments.Count() > 1)
+			{
+				Debug.LogError($"Serializer cannot handle multiple generic arguments, violating Field Name : {fieldInfo.FieldType.Name}");
+
+				return false;
+			}
+
+			genericType = allGenericArguments[0];
+			var isMonoBehaviour = genericType.IsSubclassOf(typeof(MonoBehaviour));
+
+			if (!genericType.IsSubclassOf(typeof(MonoBehaviour)))
+			{
+				Debug.LogError($"Generic type is not of type {typeof(MonoBehaviour).Name}.");
+				return false;
+			}
+
+			return isMonoBehaviour;
+		}
 	}
 }
-

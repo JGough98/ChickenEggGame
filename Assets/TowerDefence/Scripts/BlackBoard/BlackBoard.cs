@@ -1,15 +1,18 @@
 using UnityEngine;
 
 
-[RequireComponent(typeof(BlackBoardData))]
-public class BlackBoard : MonoBehaviour
+namespace Assets.TowerDefence.Scripts.BlackBoard
 {
-	[SerializeField]
-	public BlackBoardData Data;
-
-
-	public void Reset()
+	[RequireComponent(typeof(BlackBoardSceneData))]
+	public class BlackBoard : MonoBehaviour
 	{
-		Data = gameObject.GetComponent<BlackBoardData>();
+		[SerializeField]
+		public BlackBoardSceneData Data;
+
+
+		public void Reset()
+		{
+			Data = gameObject.GetComponent<BlackBoardSceneData>();
+		}
 	}
 }

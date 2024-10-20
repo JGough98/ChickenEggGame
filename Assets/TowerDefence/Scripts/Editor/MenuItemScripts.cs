@@ -2,12 +2,19 @@ using UnityEditor;
 using UnityEngine;
 
 
-public static class MenuItemScripts
+namespace Assets.TowerDefence.Scripts.Editor
 {
-	[MenuItem("EditorTools/Refresh/BlackBoard")]
-	public static void MenuitemRefreshBlackBoard()
+	using Assets.TowerDefence.Scripts.Extensions;
+	using BlackBoard;
+
+
+	public static class MenuItemScripts
 	{
-		Object.FindObjectOfType<BlackBoardData>().RefreshBlackBoard();
-		Debug.Log($"Refreshed {typeof(BlackBoardData).Name}");
+		[MenuItem("EditorTools/Refresh/BlackBoard")]
+		public static void MenuitemRefreshBlackBoard()
+		{
+			Object.FindObjectOfType<BlackBoardSceneData>().RefreshBlackBoard();
+			Debug.Log($"Refreshed {typeof(BlackBoardSceneData).Name}");
+		}
 	}
 }

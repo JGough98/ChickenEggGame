@@ -546,9 +546,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46e99b5436af834e8c67afcf817a367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Recourses:
+  recourses:
   - {fileID: 4565011023465721084}
-  Drones:
+  drones:
   - {fileID: 1419508187}
   - {fileID: 4115949935861607934}
 --- !u!4 &2008623671

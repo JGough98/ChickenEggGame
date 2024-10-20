@@ -1,13 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
-using UnityEngine;
+using System.Reflection;
 
-public static class BlackBoardExtensions
+
+namespace Assets.TowerDefence.Scripts.Extensions
 {
-	/// <summary>
-	/// This uses reflection, do not use this at runtime!
-	/// </summary>
-	public static void RefreshBlackBoard(this BlackBoardData blackBoardData)
-		=> ReflectionUtility.SerializeAllListsWithValuesFromScene(blackBoardData);
+	using Assets.TowerDefence.Scripts.Utility;
+	using BlackBoard;
+
+
+	public static class BlackBoardExtensions
+	{
+		/// <summary>
+		/// This uses reflection, do not use this at runtime!
+		/// </summary>
+		public static void RefreshBlackBoard(this BlackBoardSceneData blackBoardData)
+			=> ReflectionUtility.SerializeAllListsWithValuesFromScene(
+				blackBoardData,
+				BindingFlags.Instance,
+				BindingFlags.NonPublic);
+	}
 }
