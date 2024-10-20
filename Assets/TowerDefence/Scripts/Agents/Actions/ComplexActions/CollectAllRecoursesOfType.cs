@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -15,7 +13,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 	using IntializeData;
 
 
-	public class ActionCollectAllRecoursesOfType :
+	public class CollectAllRecoursesOfType :
 		IInitializeAction<CollectAllRecoursesOfTypeInstructionsData, CollectAllRecoursesOfTypeIntializeData>
 	{
 		private BlackBoardSceneData blackBoardSceneData;
@@ -39,7 +37,6 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 			collectRecourse = intializeData.CollectRecourse;
 		}
 
-
 		public bool Start(
 			CollectAllRecoursesOfTypeInstructionsData instructions)
 		{
@@ -48,7 +45,6 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 
 			return TryMiningRecourse();
 		}
-
 
 		public bool Perform()
 			=> mineThenDepositAction.Perform();
@@ -68,13 +64,11 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 				|| !MonoBehaviourUtlility.FindNearest(availableDropOffs, nearestRecourse.transform.position, out var nearestDropOff))
 				return false;
 
-			var actionsQueue = new Queue<(IAction performingAction, Action start)>();
-
-			actionsQueue.Enqueue(new(moveTooAction, () => moveTooAction.Start(nearestRecourse.transform.position)));
-			actionsQueue.Enqueue(new(collectRecourse, () => collectRecourse.Start(nearestRecourse)));
-			actionsQueue.Enqueue(new(moveTooAction, () => moveTooAction.Start(nearestDropOff.transform.position)));
-
-			mineThenDepositAction = new ActionCombiner(actionsQueue);
+			// What if were already holding items?
+			mineThenDepositAction = ActionCombinerUtility.CombinedAction(
+				(moveTooAction, () => moveTooAction.Start(nearestRecourse.transform.position)),
+				(collectRecourse, () => collectRecourse.Start(nearestRecourse)),
+				(moveTooAction, () => moveTooAction.Start(nearestDropOff.transform.position)));
 
 			return true;
 		}

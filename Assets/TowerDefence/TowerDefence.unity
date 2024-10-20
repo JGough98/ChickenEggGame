@@ -503,6 +503,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9033c1619d8aaa94c82ad7bf5681167a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1592909840
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592909842}
+  - component: {fileID: 1592909841}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1592909841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592909840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e887c808bf5c130438c2b2430691674d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blackBoard: {fileID: 2008623669}
+--- !u!4 &1592909842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592909840}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.4186482, y: -6.2469177, z: 4.9470854}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2008623668
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283d9c2eecc60354bb14ed8c3721f4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 2008623670}
+  sceneData: {fileID: 0}
 --- !u!114 &2008623670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +596,7 @@ MonoBehaviour:
   drones:
   - {fileID: 1419508187}
   - {fileID: 4115949935861607934}
+  dropOffs: []
 --- !u!4 &2008623671
 Transform:
   m_ObjectHideFlags: 0
@@ -749,6 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b25a7f2bd16a6448cda9ad9f9fa3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  recourseDeposit: {fileID: 0}
 --- !u!1001 &7815824174948574042
 PrefabInstance:
   m_ObjectHideFlags: 0
