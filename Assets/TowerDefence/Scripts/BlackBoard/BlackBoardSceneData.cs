@@ -1,10 +1,13 @@
-﻿using Assets.TowerDefence.Scripts.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
 namespace Assets.TowerDefence.Scripts.BlackBoard
 {
+	using Assets.TowerDefence.Scripts.Agents;
+	using Extensions;
+
+
 	public class BlackBoardSceneData : MonoBehaviour
 	{
 		[SerializeField]

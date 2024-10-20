@@ -3,6 +3,7 @@
 
 namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 {
+	using Assets.TowerDefence.Scripts.Agents;
 	using Interfaces;
 
 

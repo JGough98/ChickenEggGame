@@ -5,10 +5,11 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions
+namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 {
-	using Assets.TowerDefence.Scripts.BlackBoard;
-	using Assets.TowerDefence.Scripts.Utility;
+	using BlackBoard;
+	using Enums;
+	using Utility;
 	using InstructionData;
 	using Interfaces;
 	using IntializeData;

@@ -3,8 +3,8 @@ using System.Reflection;
 
 namespace Assets.TowerDefence.Scripts.Extensions
 {
-	using Assets.TowerDefence.Scripts.Utility;
 	using BlackBoard;
+	using Utility;
 
 
 	public static class BlackBoardExtensions

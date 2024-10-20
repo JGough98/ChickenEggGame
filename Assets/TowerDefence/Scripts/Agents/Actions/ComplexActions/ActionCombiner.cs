@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions
+namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 {
 	using Interfaces;
 
