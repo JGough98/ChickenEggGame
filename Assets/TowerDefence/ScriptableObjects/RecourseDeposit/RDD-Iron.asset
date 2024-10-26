@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: RDD-Iron
   m_EditorClassIdentifier: 
   type: 1
-  timeTakenToCollect: 2
-  quantityGathered: 4
+  timeTakenToCollect: 4
+  quantityGathered: 20
   stackCount: 40

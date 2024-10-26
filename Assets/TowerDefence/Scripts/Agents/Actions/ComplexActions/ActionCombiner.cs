@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 
 namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
@@ -14,31 +15,37 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 
 		private IAction currentAction;
 
-
-		private bool ActionFinished => currentAction.Perform();
-
-		private bool ActionsRemain => combinedActions.Count() > 0;
+		private bool started = false;
 
 
 		public ActionCombiner(Queue<(IAction performingAction, Action start)> actions)
 		{
 			combinedActions = actions;
-			StartNextAction();
 		}
 
 
-		public bool Perform()
+		public bool IsFinished()
 		{
-			if (!ActionFinished)
-				return true;
-
-			if (ActionsRemain)
+			// Not sure this is quite right, have a feeling the navmesh agent needs a frame to update before confirming?
+			if(!started)
 			{
 				StartNextAction();
-				return true;
+				started = true;
+				return false;
+			}
+			else if (!currentAction.IsFinished())
+			{
+				Debug.Log($"Doing action ({combinedActions.Count()+1})");
+				return false;
+			}
+			else if (combinedActions.Count() > 0)
+			{
+				Debug.Log($"Finished action ({combinedActions.Count()+1})");
+				StartNextAction();
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		public void Cancle()
@@ -47,8 +54,10 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 
 		private void StartNextAction()
 		{
+			var actionNum = combinedActions.Count();
 			var nextAction = combinedActions.Dequeue();
 			currentAction = nextAction.performingAction;
+			Debug.Log($"Starting action ({actionNum})");
 			nextAction.start();
 		}
 	}

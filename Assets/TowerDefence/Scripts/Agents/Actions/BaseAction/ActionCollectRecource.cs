@@ -1,6 +1,9 @@
 ﻿using System;
 
 
+using UnityEngine;
+
+
 namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 {
 	using Assets.TowerDefence.Scripts.Agents;
@@ -11,23 +14,28 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 	{
 		private RecourseDeposit recourse;
 
-		private DateTime startCollectingTime;
+		private float startCollectingTime;
+
+		private Guid recourseClameToken;
 
 
-		private bool FinishedGathering => (DateTime.Now - startCollectingTime).TotalSeconds >= recourse.TimeTakenToCollect;
+		private bool FinishedGathering => (Time.unscaledTime - startCollectingTime) >= recourse.TimeToTake(recourseClameToken);
 
 
 		public void Cancle()
-			=> recourse.CancleCollecting();
+			=> recourse.CancleCollecting(recourseClameToken);
 
-		public bool Perform()
+		public bool IsFinished()
 		{
+			var e = Time.unscaledTime - startCollectingTime;
+			var d = recourse.TimeToTake(recourseClameToken);
+
 			if (!FinishedGathering)
-				return true;
+				return false;
 
-			recourse.RemoveRecourse();
+			recourse.CompleteRemoval(recourseClameToken);
 
-			return TryGather();
+			return true; // TryGather();
 		}
 
 		public bool Start(
@@ -37,14 +45,17 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 			return TryGather();
 		}
 
+
 		private bool TryGather()
 		{
-			var canPerform = recourse.CanStartCollecting;
+			var canPerform = recourse.ClaimRecourse(
+				20,
+				out var claim);
 
-			if (recourse.CanStartCollecting)
+			if (canPerform)
 			{
-				recourse.StartCollecting();
-				startCollectingTime = DateTime.Now;
+				recourseClameToken = claim!.Value;
+				startCollectingTime = Time.unscaledTime;
 			}
 
 			return canPerform;

@@ -24,9 +24,7 @@ namespace Assets.TowerDefence.Scripts.ScriptableObjects
 
 		public ERecourseType Type => type;
 
-		public float TimeTakenToCollect => timeTakenToCollect;
-
-		public float QuantityGathered => quantityGathered;
+		public float TimeTakenToCollectOneUnit => timeTakenToCollect / quantityGathered;
 
 		public int StackCount => stackCount;
 	}

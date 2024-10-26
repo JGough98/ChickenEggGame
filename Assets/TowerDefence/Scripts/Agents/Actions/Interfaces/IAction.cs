@@ -7,10 +7,10 @@
 	public interface IAction
 	{
 		/// <summary>
-		/// Used to peform an action and state whether its finished.
+		/// Used to peform the action and returns true once finished.
 		/// </summary>
 		/// <returns></returns>
-		public bool Perform();
+		public bool IsFinished();
 
 		/// <summary>
 		/// Used to cancle the ongoing action.

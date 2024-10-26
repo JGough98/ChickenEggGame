@@ -21,7 +21,7 @@ namespace Assets.TowerDefence.Scripts
 		private CollectAllRecoursesOfType goCollectRecourses;
 
 
-		public void Start ()
+		public void Start()
 		{
 			var agent = blackBoard.Data.Drones.FirstOrDefault();
 			var navMeshAgent = agent.GetComponent<NavMeshAgent>();
@@ -39,13 +39,17 @@ namespace Assets.TowerDefence.Scripts
 					collectRecourse,
 					blackBoard.Data));
 
-			goCollectRecourses.Start(new CollectAllRecoursesOfTypeInstructionsData(ERecourseType.IRON, navMeshAgent));
+			goCollectRecourses.Start(
+				new CollectAllRecoursesOfTypeInstructionsData(ERecourseType.IRON, navMeshAgent));
 		}
 
 
-		public void FixedUpdate()
+		public void Update()
 		{
-			goCollectRecourses.Perform();
+			if(goCollectRecourses.IsFinished())
+			{
+				Debug.Log("Ended");
+			}
 		}
 
 		public void Reset()

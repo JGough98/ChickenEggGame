@@ -25,10 +25,11 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 		public bool Start(Vector3 travelPosition)
 		{
 			this.travelPosition = travelPosition;
-			return agent.SetDestination(travelPosition);
+			var e = agent.SetDestination(travelPosition);
+			return e;
 		}
 
-		public bool Perform()
+		public bool IsFinished()
 		{
 			Debug.DrawRay(travelPosition, Vector3.up, Color.blue, 1.0f);
 			return ReachedDestination;

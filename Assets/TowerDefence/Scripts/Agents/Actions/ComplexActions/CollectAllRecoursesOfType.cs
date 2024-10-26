@@ -46,8 +46,15 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 			return TryMiningRecourse();
 		}
 
-		public bool Perform()
-			=> mineThenDepositAction.Perform();
+		public bool IsFinished()
+		{
+			if (!mineThenDepositAction.IsFinished())
+			{
+				return false;
+			}
+
+			return TryMiningRecourse();
+		}
 
 		public void Cancle()
 			=> mineThenDepositAction.Cancle();
@@ -56,13 +63,13 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 		private bool TryMiningRecourse()
 		{
 			var availableRecourses = blackBoardSceneData.Recourses
-				.Where(x => x.Type == recouseToCollect);
+				.Where(x => x.Type == recouseToCollect && x.HasRecourses);
 			var availableDropOffs = blackBoardSceneData.DropOffs
 				.Where(x => x.AcceptsRecourse(recouseToCollect));
 
 			if (!MonoBehaviourUtlility.FindNearest(availableRecourses, agent.transform.position, out var nearestRecourse)
 				|| !MonoBehaviourUtlility.FindNearest(availableDropOffs, nearestRecourse.transform.position, out var nearestDropOff))
-				return false;
+				return true;
 
 			// What if were already holding items?
 			mineThenDepositAction = ActionCombinerUtility.CombinedAction(
@@ -70,7 +77,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 				(collectRecourse, () => collectRecourse.Start(nearestRecourse)),
 				(moveTooAction, () => moveTooAction.Start(nearestDropOff.transform.position)));
 
-			return true;
+			return false;
 		}
 	}
 }
