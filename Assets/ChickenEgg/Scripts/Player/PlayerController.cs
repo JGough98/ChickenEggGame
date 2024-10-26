@@ -1,4 +1,4 @@
-using CG.ScriptableObjects.Scripts;
+/*using CG.ScriptableObjects.Scripts;
 using CG.Scripts.Collision.Detection;
 using CG.Scripts.Controles.PlayerInput;
 using CG.Scripts.Controles.PlayerInput.Interpreted;
@@ -13,9 +13,9 @@ namespace CG.Scripts
         [SerializeField]
         private Rigidbody rigidbody;
         
-        [SerializeField]
+*//*        [SerializeField]
         private Transform camera;
-
+*//*
         [SerializeReference]
         private DirectionalRayCollision groundCollision;
 
@@ -134,4 +134,4 @@ namespace CG.Scripts
             return currentSpeed;
         }
     }
-}
+}*/

@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 
 public interface ISpawnAnimation
@@ -45,3 +45,4 @@ public class Egg : MonoBehaviour, ITeleportPlayer
 
     }
 }
+*/
