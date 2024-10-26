@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,8 +10,10 @@ namespace Assets.TowerDefence.Scripts
 	using Agents.Actions.ComplexActions;
 	using Agents.Actions.InstructionData;
 	using Agents.Actions.IntializeData;
+	using Assets.TowerDefence.Scripts.Agents.Actions.Interfaces;
 	using Assets.TowerDefence.Scripts.Enums;
 	using BlackBoard;
+
 
 	[RequireComponent(typeof(BlackBoardController))]
 	public class GameController : MonoBehaviour
@@ -18,7 +21,14 @@ namespace Assets.TowerDefence.Scripts
 		[SerializeField]
 		private BlackBoardController blackBoard;
 
-		private CollectAllRecoursesOfType goCollectRecourses;
+		[SerializeField]
+		private EnamySpawner enamySpawner;
+
+		[SerializeField]
+		private Enamy enamyExample;
+
+
+		private List<IAction> agentActions = new List<IAction>();
 
 
 		public void Start()
@@ -26,12 +36,13 @@ namespace Assets.TowerDefence.Scripts
 			var agent = blackBoard.Data.Drones.FirstOrDefault();
 			var navMeshAgent = agent.GetComponent<NavMeshAgent>();
 
-			goCollectRecourses = new CollectAllRecoursesOfType();
+			var goCollectRecourses = new CollectAllRecoursesOfType();
 
 			var moveAction = new ActionMoveToPoint();
 			var collectRecourse = new ActionCollectRecource();
 
-			moveAction.Intialize(navMeshAgent);
+			moveAction.Intialize(
+				navMeshAgent);
 
 			goCollectRecourses.Intialize(
 				new CollectAllRecoursesOfTypeIntializeData(
@@ -41,14 +52,19 @@ namespace Assets.TowerDefence.Scripts
 
 			goCollectRecourses.Start(
 				new CollectAllRecoursesOfTypeInstructionsData(ERecourseType.IRON, navMeshAgent));
+
+			agentActions.Add(
+				enamySpawner.SpwanEnamy(enamyExample));
+			agentActions.Add(
+				goCollectRecourses);
 		}
 
 
 		public void Update()
 		{
-			if(goCollectRecourses.IsFinished())
+			foreach(var e in agentActions)
 			{
-				Debug.Log("Ended");
+				e.IsFinished();
 			}
 		}
 
