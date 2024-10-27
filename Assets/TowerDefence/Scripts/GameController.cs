@@ -6,12 +6,13 @@ using UnityEngine.AI;
 
 namespace Assets.TowerDefence.Scripts
 {
+	using Agents;
 	using Agents.Actions.BaseAction;
 	using Agents.Actions.ComplexActions;
 	using Agents.Actions.InstructionData;
 	using Agents.Actions.IntializeData;
-	using Assets.TowerDefence.Scripts.Agents.Actions.Interfaces;
-	using Assets.TowerDefence.Scripts.Enums;
+	using Agents.Actions.Interfaces;
+	using Enums;
 	using BlackBoard;
 
 
@@ -26,6 +27,9 @@ namespace Assets.TowerDefence.Scripts
 
 		[SerializeField]
 		private Enamy enamyExample;
+
+		[SerializeField]
+		private Turret turretExample;
 
 
 		private List<IAction> agentActions = new List<IAction>();

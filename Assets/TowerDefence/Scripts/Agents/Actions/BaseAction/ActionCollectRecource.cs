@@ -1,12 +1,10 @@
 ﻿using System;
 
 
-using UnityEngine;
-
-
 namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 {
-	using Assets.TowerDefence.Scripts.Agents;
+	using Agents;
+	using Utility;
 	using Interfaces;
 
 
@@ -14,12 +12,12 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 	{
 		private RecourseDeposit recourse;
 
-		private float startCollectingTime;
-
 		private Guid recourseClameToken;
 
+		private ITimer timer = new Timer();
 
-		private bool FinishedGathering => (Time.unscaledTime - startCollectingTime) >= recourse.TimeToTake(recourseClameToken);
+
+		private bool FinishedGathering => timer.Finished;
 
 
 		public void Cancle()
@@ -27,9 +25,6 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 
 		public bool IsFinished()
 		{
-			var e = Time.unscaledTime - startCollectingTime;
-			var d = recourse.TimeToTake(recourseClameToken);
-
 			if (!FinishedGathering)
 				return false;
 
@@ -55,7 +50,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 			if (canPerform)
 			{
 				recourseClameToken = claim!.Value;
-				startCollectingTime = Time.unscaledTime;
+				timer.Start(recourse.TimeToTake(recourseClameToken));
 			}
 
 			return canPerform;
