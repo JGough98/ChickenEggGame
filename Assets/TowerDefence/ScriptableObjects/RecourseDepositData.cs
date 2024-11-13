@@ -6,7 +6,7 @@ namespace Assets.TowerDefence.Scripts.ScriptableObjects
 	using Enums;
 
 
-	[CreateAssetMenu(fileName = "RecourseDepositData", menuName = "ScriptableObjects/RecourseDepositData", order = 1)]
+	[CreateAssetMenu(fileName = "RecourseDepositData-", menuName = "ScriptableObjects/RecourseDeposit", order = 1)]
 	public class RecourseDepositData : ScriptableObject
 	{
 		[SerializeField]

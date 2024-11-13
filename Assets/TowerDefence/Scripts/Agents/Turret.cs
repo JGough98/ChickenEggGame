@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Assets.TowerDefence.Scripts.Agents
 {
 	using Actions.Interfaces;
+	using TowerDefence.ScriptableObjects;
 
 
 	public class Turret : MonoBehaviour, IRotationSetter
@@ -12,7 +13,7 @@ namespace Assets.TowerDefence.Scripts.Agents
 		private FieldOfView fieldOfView;
 
 		[SerializeField]
-		private AmunitionType amunitionType;
+		private AmunitionTypeData amunitionType;
 
 
 		private Vector3 CurrentDirection => Rotation.eulerAngles.normalized;
