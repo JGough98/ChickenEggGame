@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6536793211867791776}
   - component: {fileID: 2975503467984776442}
   - component: {fileID: 5057878001660015211}
-  - component: {fileID: 2654106272839525161}
+  - component: {fileID: 8539397144134776417}
   m_Layer: 0
   m_Name: WayPoint
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2975503467984776442
 MeshFilter:
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2654106272839525161
+--- !u!114 &8539397144134776417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1558390871469783283}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee603e7199b8c8e4b9bcc9bf90b59929, type: 3}
+  m_Script: {fileID: 11500000, guid: 84ad2b3620e356048ac29db819de6345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground: {fileID: 6040869420357435070, guid: 5426a41756b13014ba61fa95b7cec3f9, type: 3}
+  ground: {fileID: 0}
