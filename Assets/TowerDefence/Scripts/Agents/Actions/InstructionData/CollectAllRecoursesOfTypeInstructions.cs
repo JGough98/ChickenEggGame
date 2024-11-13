@@ -6,7 +6,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.InstructionData
 	using Enums;
 
 
-	public struct CollectAllRecoursesOfTypeInstructionsData
+	public struct CollectAllRecoursesOfTypeInstructions
 	{
 		public ERecourseType RecouseToCollect
 		{
@@ -21,7 +21,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.InstructionData
 		}
 
 
-		public CollectAllRecoursesOfTypeInstructionsData(
+		public CollectAllRecoursesOfTypeInstructions(
 			ERecourseType recouseToCollect,
 			NavMeshAgent agent)
 		{
