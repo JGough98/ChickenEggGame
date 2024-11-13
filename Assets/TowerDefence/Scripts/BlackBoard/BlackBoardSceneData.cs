@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace Assets.TowerDefence.Scripts.BlackBoard
 {
-	using Assets.TowerDefence.Scripts.Agents;
+	using Agents;
 	using Extensions;
+	using Utility;
 
 
 	public class BlackBoardSceneData : MonoBehaviour
@@ -25,6 +26,16 @@ namespace Assets.TowerDefence.Scripts.BlackBoard
 		public IReadOnlyList<Drone> Drones => drones;
 
 		public IReadOnlyList<DepositDropOff> DropOffs => dropOffs;
+
+
+#if UNITY_EDITOR
+		private void Awake()
+		{
+			recourses.GuardAgainstNull();
+			drones.GuardAgainstNull();
+			dropOffs.GuardAgainstNull();
+		}
+#endif
 
 
 		public void Reset()
