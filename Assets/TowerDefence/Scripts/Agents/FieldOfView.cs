@@ -4,6 +4,15 @@ using UnityEngine;
 
 namespace Assets.TowerDefence.Scripts.Agents
 {
+	public class TargetTracker
+	{
+		public bool HasTarget
+		{
+			get;
+		}
+	}
+
+
 	public class FieldOfView : MonoBehaviour
 	{
 		private List<Enamy> targets = new List<Enamy>();

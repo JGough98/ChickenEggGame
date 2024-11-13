@@ -14,7 +14,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 
 
 	public class CollectAllRecoursesOfType :
-		IInitializeAction<CollectAllRecoursesOfTypeInstructionsData, CollectAllRecoursesOfTypeIntializeData>
+		IInitializeAction<CollectAllRecoursesOfTypeInstructions, CollectAllRecoursesOfTypeIntializeData>
 	{
 		private BlackBoardSceneData blackBoardSceneData;
 
@@ -38,7 +38,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 		}
 
 		public bool Start(
-			CollectAllRecoursesOfTypeInstructionsData instructions)
+			CollectAllRecoursesOfTypeInstructions instructions)
 		{
 			agent = instructions.Agent;
 			recouseToCollect = instructions.RecouseToCollect;

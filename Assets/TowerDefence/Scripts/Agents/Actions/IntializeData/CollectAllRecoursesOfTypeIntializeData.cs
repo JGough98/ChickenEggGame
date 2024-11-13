@@ -3,7 +3,7 @@
 
 namespace Assets.TowerDefence.Scripts.Agents.Actions.IntializeData
 {
-	using Assets.TowerDefence.Scripts.Agents;
+	using Agents;
 	using BlackBoard;
 	using Interfaces;
 

@@ -1,6 +1,5 @@
 ﻿namespace Assets.TowerDefence.Scripts.Agents.Actions.IntializeData
 {
-	using BaseAction;
 	using Interfaces;
 
 

@@ -23,6 +23,10 @@ namespace Assets.TowerDefence.Scripts.Agents
 
 		public Vector3 Position => transform.position;
 
+		public FieldOfView FieldOfView => fieldOfView;
+
+		public AmunitionTypeData AmunitionType => amunitionType;
+
 
 
 		// Will need to account for how we rotate both the barrel and the turret.
