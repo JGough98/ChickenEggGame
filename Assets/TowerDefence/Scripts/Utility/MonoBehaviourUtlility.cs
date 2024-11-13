@@ -8,9 +8,9 @@ namespace Assets.TowerDefence.Scripts.Utility
 	{
 		public static bool FindNearest<T>(
 			IEnumerable<T> items,
-			Vector3 positionToTravelToo,
+			Vector3 position,
 			out T closestItem)
-				where T : MonoBehaviour
+			where T : MonoBehaviour
 		{
 			var closest = float.MaxValue;
 			closestItem = null;
@@ -19,7 +19,7 @@ namespace Assets.TowerDefence.Scripts.Utility
 			{
 				var straightLineDistance = Vector3.Distance(
 					item.transform.position,
-					positionToTravelToo);
+					position);
 
 				if (straightLineDistance < closest)
 				{
