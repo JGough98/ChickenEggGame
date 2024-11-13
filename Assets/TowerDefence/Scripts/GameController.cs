@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
 
 
 namespace Assets.TowerDefence.Scripts
@@ -11,9 +9,8 @@ namespace Assets.TowerDefence.Scripts
 	using Agents.Actions.ComplexActions;
 	using Agents.Actions.InstructionData;
 	using Agents.Actions.IntializeData;
-	using Agents.Actions.Interfaces;
-	using Enums;
 	using BlackBoard;
+	using Enums;
 
 
 	[RequireComponent(typeof(BlackBoardController))]
@@ -23,7 +20,7 @@ namespace Assets.TowerDefence.Scripts
 		private BlackBoardController blackBoard;
 
 		[SerializeField]
-		private EnamySpawner enamySpawner;
+		private RunWaySpawner enamySpawner;
 
 		[SerializeField]
 		private Enamy enamyExample;
@@ -31,14 +28,12 @@ namespace Assets.TowerDefence.Scripts
 		[SerializeField]
 		private Turret turretExample;
 
-
-		private List<IAction> agentActions = new List<IAction>();
+		private AgentManager agentManager = new AgentManager();
 
 
 		public void Start()
 		{
 			var agent = blackBoard.Data.Drones.FirstOrDefault();
-			var navMeshAgent = agent.GetComponent<NavMeshAgent>();
 
 			var goCollectRecourses = new CollectAllRecoursesOfType();
 
@@ -46,7 +41,7 @@ namespace Assets.TowerDefence.Scripts
 			var collectRecourse = new ActionCollectRecource();
 
 			moveAction.Intialize(
-				navMeshAgent);
+				agent.NavMeshAgent);
 
 			goCollectRecourses.Intialize(
 				new CollectAllRecoursesOfTypeIntializeData(
@@ -55,21 +50,19 @@ namespace Assets.TowerDefence.Scripts
 					blackBoard.Data));
 
 			goCollectRecourses.Start(
-				new CollectAllRecoursesOfTypeInstructionsData(ERecourseType.IRON, navMeshAgent));
+				new CollectAllRecoursesOfTypeInstructionsData(
+					ERecourseType.IRON,
+					agent.NavMeshAgent));
 
-			agentActions.Add(
-				enamySpawner.SpwanEnamy(enamyExample));
-			agentActions.Add(
+			agentManager.AddAgents(
+				enamySpawner.SpwanAtRunWay(enamyExample),
 				goCollectRecourses);
 		}
 
 
 		public void Update()
 		{
-			foreach(var e in agentActions)
-			{
-				e.IsFinished();
-			}
+			agentManager.PeformAgentActions();
 		}
 
 		public void Reset()
