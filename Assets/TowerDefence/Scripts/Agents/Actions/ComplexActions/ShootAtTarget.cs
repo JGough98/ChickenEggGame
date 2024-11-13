@@ -1,48 +1,76 @@
-﻿using UnityEngine.AI;
+﻿using System;
+using UnityEngine.AI;
 
 
 namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 {
+	using Assets.TowerDefence.Scripts.Utility;
 	using BlackBoard;
 	using InstructionData;
 	using Interfaces;
 	using IntializeData;
-	using System;
+	using Mono.Reflection;
+	using System.Diagnostics;
+	using System.Linq;
 
-	public class ShootAtTarget : IInitializeAction<CollectAllRecoursesOfTypeInstructionsData, CollectAllRecoursesOfTypeIntializeData>
+	public class ShootAtTarget : IInitializeAction<ShootAtTargetInstructions, ShootAtTargeIntializeData>
 	{
 		private BlackBoardSceneData blackBoardSceneData;
 
-		private NavMeshAgent agent;
+		private Turret turret;
 
-		private IStartAction<IPosition> rotateTowardsAction;
+		private IInitializeAction<IPosition, RotateActionSetup> rotateTowardsAction;
 
 		private IStartAction<ShootActionSetup> shootAction;
 
 		private IAction shootRotate;
 
 
-		public void Cancle()
+		public void Intialize(ShootAtTargeIntializeData intializeData)
 		{
-			throw new System.NotImplementedException();
+			this.blackBoardSceneData = intializeData.BlackBoardSceneData;
+			this.rotateTowardsAction = intializeData.RotateTowardsAction;
+			this.shootAction = intializeData.ShootAction;
+			this.turret = intializeData.Turret;
 		}
 
-		public void Intialize(CollectAllRecoursesOfTypeIntializeData intializeData)
+		public bool Start(
+			ShootAtTargetInstructions instructions)
 		{
-			throw new System.NotImplementedException();
+			this.turret = instructions.Turret;
+
+			return false;
 		}
 
 		public bool IsFinished()
 		{
-			throw new System.NotImplementedException();
+			if(shootRotate == null)
+			{
+				return TryAssignNewTarget();
+			}
+			if (!shootRotate.IsFinished())
+			{
+				return false;
+			}
+
+			return false;
 		}
 
-		public bool Start(CollectAllRecoursesOfTypeInstructionsData instructions)
-		{
-			throw new NotImplementedException();
+		public void Cancle()
+			=> shootRotate.Cancle();
 
-			/*rotateTowardsAction.Start();
-			shootAction.Start();*/
+
+		private bool TryAssignNewTarget()
+		{
+			if(turret.FieldOfView.Targets.Any())
+			{
+				rotateTowardsAction.Intialize(new RotateActionSetup(turret, 50));
+				UnityEngine.Debug.Log("Lets go!!");
+				shootRotate = ActionCombinerUtility.CombinedAction(
+					(rotateTowardsAction, () => rotateTowardsAction.Start(turret.FieldOfView.Targets.First())));
+			}
+
+			return false;
 		}
 	}
 }
