@@ -1,19 +1,20 @@
-﻿using UnityEngine;
+﻿using UnityEngine.AI;
+using UnityEngine;
 
 
 namespace Assets.TowerDefence.Scripts.Agents
 {
 	public interface IAgent
 	{
-		public UnityEngine.AI.NavMeshAgent Agent
+		public NavMeshAgent NavMeshAgent
 		{
 			get;
 		}
 	}
 
-
-	public class Drone : MonoBehaviour
+	[RequireComponent(typeof(NavMeshAgent))]
+	public class Drone : MonoBehaviour, IAgent
 	{
-
+		public NavMeshAgent NavMeshAgent => gameObject.GetComponent<NavMeshAgent>();
 	}
 }

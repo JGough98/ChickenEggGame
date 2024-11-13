@@ -39,10 +39,6 @@ namespace Assets.TowerDefence.Scripts.Agents
 		}
 
 
-
-
-
-
 		// Need to look into Vector dot products and figure out not only if a bullet will intercect but at what rotation this should occur.
 		private bool LineLineIntersection(
 			out Vector3 intersection,

@@ -10,6 +10,6 @@ namespace Assets.TowerDefence.Scripts.Agents
 		private NavMeshAgent agent;
 
 
-		public NavMeshAgent Agent => agent;
+		public NavMeshAgent NavMeshAgent => agent;
 	}
 }

@@ -39,9 +39,6 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 				rotationSpeed,
 				rotateFunction);
 
-		public void Cancle()
-		{
-
-		}
+		public void Cancle() { }
 	}
 }
