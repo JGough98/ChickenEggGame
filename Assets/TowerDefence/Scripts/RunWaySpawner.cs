@@ -19,6 +19,13 @@ namespace Assets.TowerDefence.Scripts
 		private List<RunWayPoint> runWayPoints;
 
 
+#if UNITY_EDITOR
+		private void Awake()
+		{
+			runWayPoints.GuardAgainstNull();
+		}
+#endif
+
 		public IAction SpwanAtRunWay<T>(T enamy) where T : MonoBehaviour, IAgent
 		{
 			var newEnamy = GameObject.Instantiate<T>(enamy);
