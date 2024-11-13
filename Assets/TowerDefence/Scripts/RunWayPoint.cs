@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class EnamyWayPoint : MonoBehaviour
+public class RunWayPoint : MonoBehaviour
 {
 	[SerializeField]
 	private Transform ground;
