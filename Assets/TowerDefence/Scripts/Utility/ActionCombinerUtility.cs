@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace Assets.TowerDefence.Scripts.Utility
+namespace Assets.TowerDefense.Scripts.Utility
 {
 	using Agents.Actions.ComplexActions;
 	using Agents.Actions.Interfaces;

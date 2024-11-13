@@ -1,4 +1,4 @@
-﻿namespace Assets.TowerDefence.Scripts.Agents.Actions.IntializeData
+﻿namespace Assets.TowerDefense.Scripts.Agents.Actions.IntializeData
 {
 	using BlackBoard;
 	using Interfaces;

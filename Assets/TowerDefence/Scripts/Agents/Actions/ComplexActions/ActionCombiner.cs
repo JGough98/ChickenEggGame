@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
+namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 {
 	using Interfaces;
 
@@ -48,8 +48,8 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 			return true;
 		}
 
-		public void Cancle()
-			=> currentAction.Cancle();
+		public void Cancel()
+			=> currentAction.Cancel();
 
 
 		private void StartNextAction()

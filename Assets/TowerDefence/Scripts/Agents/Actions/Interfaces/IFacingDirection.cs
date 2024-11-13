@@ -1,8 +1,8 @@
-﻿namespace Assets.TowerDefence.Scripts.Agents.Actions.Interfaces
+﻿namespace Assets.TowerDefense.Scripts.Agents.Actions.Interfaces
 {
 	public interface IFacingDirection
 	{
-		public bool Isfacing
+		public bool IsFacing
 		{
 			get;
 		}

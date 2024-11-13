@@ -2,7 +2,7 @@ using UnityEngine.AI;
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Agents
+namespace Assets.TowerDefense.Scripts.Agents
 {
 	using Actions.Interfaces;
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.IntializeData
+namespace Assets.TowerDefense.Scripts.Agents.Actions.IntializeData
 {
 	using Agents;
 	using BlackBoard;

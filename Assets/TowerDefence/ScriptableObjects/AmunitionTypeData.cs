@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Assets.TowerDefence.ScriptableObjects
+namespace Assets.TowerDefense.ScriptableObjects
 {
 	[CreateAssetMenu(fileName = "AmunitionTypeData-", menuName = "ScriptableObjects/AmunitionType", order = 5)]
 	public class AmunitionTypeData : ScriptableObject

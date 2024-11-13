@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
+namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 {
 	using Interfaces;
 
@@ -17,7 +17,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 		private bool ReachedDestination => agent.remainingDistance <= agent.stoppingDistance;
 
 
-		public void Intialize(NavMeshAgent agent)
+		public void Initialize(NavMeshAgent agent)
 		{
 			this.agent = agent;
 		}
@@ -35,7 +35,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 			return ReachedDestination;
 		}
 
-		public void Cancle()
+		public void Cancel()
 			=> agent.isStopped = true;
 	}
 }

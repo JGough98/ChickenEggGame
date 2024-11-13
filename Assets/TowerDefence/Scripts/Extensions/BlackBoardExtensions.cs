@@ -1,7 +1,7 @@
 using System.Reflection;
 
 
-namespace Assets.TowerDefence.Scripts.Extensions
+namespace Assets.TowerDefense.Scripts.Extensions
 {
 	using BlackBoard;
 	using Utility;

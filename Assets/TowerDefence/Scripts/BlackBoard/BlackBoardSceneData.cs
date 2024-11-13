@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.BlackBoard
+namespace Assets.TowerDefense.Scripts.BlackBoard
 {
 	using Agents;
 	using Extensions;

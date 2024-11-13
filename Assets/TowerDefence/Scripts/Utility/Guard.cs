@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Utility
+namespace Assets.TowerDefense.Scripts.Utility
 {
 	public static class Guard
 	{
@@ -31,7 +31,7 @@ namespace Assets.TowerDefence.Scripts.Utility
 			var containsNoElements = items.Count() == 0;
 
 			if (containsNoElements)
-				Debug.LogError($"{GuardMessageStart<T>()} Enumrable has no elements.");
+				Debug.LogError($"{GuardMessageStart<T>()} Enumerable has no elements.");
 
 			return !containsNoElements;
 		}
@@ -42,7 +42,7 @@ namespace Assets.TowerDefence.Scripts.Utility
 			var containsNullElements = items.Any(x => x == null);
 
 			if (containsNullElements)
-				Debug.LogError($"{GuardMessageStart<T>()} Enumrable contains null elements.");
+				Debug.LogError($"{GuardMessageStart<T>()} Enumerable contains null elements.");
 
 			return !containsNullElements;
 		}

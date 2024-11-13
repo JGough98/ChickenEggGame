@@ -1,16 +1,16 @@
 ﻿using System;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
+namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 {
 	using Agents;
 	using Utility;
 	using Interfaces;
 
 
-	public class ActionCollectRecource : IStartAction<RecourseDeposit>
+	public class ActionCollectRecourse : IStartAction<RecourseDeposit>
 	{
-		private RecourseDeposit recourse;
+		private RecourseDeposit recourseDeposit;
 
 		private Guid recourseClameToken;
 
@@ -20,15 +20,15 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 		private bool FinishedGathering => timer.Finished;
 
 
-		public void Cancle()
-			=> recourse.CancleCollecting(recourseClameToken);
+		public void Cancel()
+			=> recourseDeposit.CancleCollecting(recourseClameToken);
 
 		public bool IsFinished()
 		{
 			if (!FinishedGathering)
 				return false;
 
-			recourse.CompleteRemoval(recourseClameToken);
+			recourseDeposit.CompleteRemoval(recourseClameToken);
 
 			return true; // TryGather();
 		}
@@ -36,21 +36,21 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 		public bool Start(
 			RecourseDeposit recourse)
 		{
-			this.recourse = recourse;
+			this.recourseDeposit = recourse;
 			return TryGather();
 		}
 
 
 		private bool TryGather()
 		{
-			var canPerform = recourse.ClaimRecourse(
+			var canPerform = recourseDeposit.ClaimRecourse(
 				20,
 				out var claim);
 
 			if (canPerform)
 			{
 				recourseClameToken = claim!.Value;
-				timer.Start(recourse.TimeToTake(recourseClameToken));
+				timer.Start(recourseDeposit.TimeToTake(recourseClameToken));
 			}
 
 			return canPerform;

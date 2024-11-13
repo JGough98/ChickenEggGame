@@ -1,4 +1,4 @@
-﻿namespace Assets.TowerDefence.Scripts.Agents.Actions.InstructionData
+﻿namespace Assets.TowerDefense.Scripts.Agents.Actions.InstructionData
 {
 	public struct ShootAtTargetInstructions
 	{

@@ -1,14 +1,14 @@
 ﻿using UnityEngine.AI;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.InstructionData
+namespace Assets.TowerDefense.Scripts.Agents.Actions.InstructionData
 {
 	using Enums;
 
 
 	public struct CollectAllRecoursesOfTypeInstructions
 	{
-		public ERecourseType RecouseToCollect
+		public ERecourseType RecourseToCollect
 		{
 			get;
 			private set;
@@ -22,10 +22,10 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.InstructionData
 
 
 		public CollectAllRecoursesOfTypeInstructions(
-			ERecourseType recouseToCollect,
+			ERecourseType recourseToCollect,
 			NavMeshAgent agent)
 		{
-			this.RecouseToCollect = recouseToCollect;
+			this.RecourseToCollect = recourseToCollect;
 			this.Agent = agent;
 		}
 	}

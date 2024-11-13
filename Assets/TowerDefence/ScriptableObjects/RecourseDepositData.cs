@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.ScriptableObjects
+namespace Assets.TowerDefense.Scripts.ScriptableObjects
 {
 	using Enums;
 

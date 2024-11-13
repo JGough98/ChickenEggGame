@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts
+namespace Assets.TowerDefense.Scripts
 {
 	using Agents;
 	using Agents.Actions.BaseAction;
@@ -40,14 +40,14 @@ namespace Assets.TowerDefence.Scripts
 			var turretShootAction = new ShootAtTarget();
 
 			var moveAction = new ActionMoveToPoint();
-			var collectRecourse = new ActionCollectRecource();
+			var collectRecourse = new ActionCollectRecourse();
 			var shootAction = new ShootAction();
 			var rotateAction = new ActionRotate();
 
-			moveAction.Intialize(
+			moveAction.Initialize(
 				agent.NavMeshAgent);
 
-			droneGoCollectRecourses.Intialize(
+			droneGoCollectRecourses.Initialize(
 				new CollectAllRecoursesOfTypeIntializeData(
 					moveAction,
 					collectRecourse,
@@ -58,7 +58,7 @@ namespace Assets.TowerDefence.Scripts
 					ERecourseType.IRON,
 					agent.NavMeshAgent));
 
-			turretShootAction.Intialize(
+			turretShootAction.Initialize(
 				new ShootAtTargeIntializeData(
 					blackBoard.Data,
 					rotateAction,

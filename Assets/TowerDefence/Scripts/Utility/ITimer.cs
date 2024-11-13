@@ -1,4 +1,4 @@
-﻿namespace Assets.TowerDefence.Scripts.Utility
+﻿namespace Assets.TowerDefense.Scripts.Utility
 {
 	public interface ITimer
 	{

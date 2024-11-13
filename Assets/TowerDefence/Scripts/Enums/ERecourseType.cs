@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Assets.TowerDefence.Scripts.Enums
+namespace Assets.TowerDefense.Scripts.Enums
 {
 	[Flags]
 	public enum ERecourseType

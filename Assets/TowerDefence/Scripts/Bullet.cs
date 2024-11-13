@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts
+namespace Assets.TowerDefense.Scripts
 {
 	[RequireComponent(typeof(Rigidbody))]
 	public class Bullet : MonoBehaviour

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.BlackBoard
+namespace Assets.TowerDefense.Scripts.BlackBoard
 {
 	/// <summary>
 	/// Represents all data agents will need to request for.

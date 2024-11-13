@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
+namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 {
 	using IntializeData;
 	using Interfaces;
@@ -21,7 +21,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 		private Vector3 NormalizedDirectionToTarget => (target.Position - agent.Position).normalized;
 
 
-		public void Intialize(RotateActionSetup rotationSetup)
+		public void Initialize(RotateActionSetup rotationSetup)
 		{
 			this.agent = rotationSetup.Agent;
 			this.rotationSpeed = rotationSetup.RotationSpeed;
@@ -39,6 +39,6 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
 				rotationSpeed,
 				rotateFunction);
 
-		public void Cancle() { }
+		public void Cancel() { }
 	}
 }

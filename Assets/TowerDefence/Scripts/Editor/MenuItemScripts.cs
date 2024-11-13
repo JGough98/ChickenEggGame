@@ -2,9 +2,9 @@ using UnityEditor;
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Editor
+namespace Assets.TowerDefense.Scripts.Editor
 {
-	using Assets.TowerDefence.Scripts.Extensions;
+	using Assets.TowerDefense.Scripts.Extensions;
 	using BlackBoard;
 
 

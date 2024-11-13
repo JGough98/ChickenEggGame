@@ -1,10 +1,10 @@
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Agents
+namespace Assets.TowerDefense.Scripts.Agents
 {
 	using Actions.Interfaces;
-	using TowerDefence.ScriptableObjects;
+	using TowerDefense.ScriptableObjects;
 
 
 	public class Turret : MonoBehaviour, IRotationSetter

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
+namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 {
 	using Interfaces;
 

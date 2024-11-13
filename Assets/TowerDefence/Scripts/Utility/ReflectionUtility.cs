@@ -8,7 +8,7 @@ using UnityObject = UnityEngine.Object;
 using Object = System.Object;
 
 
-namespace Assets.TowerDefence.Scripts.Utility
+namespace Assets.TowerDefense.Scripts.Utility
 {
 	public static class ReflectionUtility
 	{
@@ -23,12 +23,12 @@ namespace Assets.TowerDefence.Scripts.Utility
 			foreach (var baseFieldInfo in baseTypeFeildInfos)
 			{
 				if (IsGenericList(baseFieldInfo)
-					&& GetListMonoBehaviourGenericType(baseFieldInfo, out var genericType))
+					&& GetListMonoBehaviorGenericType(baseFieldInfo, out var genericType))
 				{
 					AssignListValues(
 						new object[]
 						{
-						UnityObject.FindObjectsOfType(genericType)
+							UnityObject.FindObjectsOfType(genericType)
 						},
 						genericType,
 						baseFieldInfo,
@@ -52,7 +52,7 @@ namespace Assets.TowerDefence.Scripts.Utility
 			listField.SetValue(orginalObject, typedList);
 		}
 
-		public static bool GetListMonoBehaviourGenericType(
+		public static bool GetListMonoBehaviorGenericType(
 			FieldInfo fieldInfo,
 			out Type genericType)
 		{
@@ -61,7 +61,7 @@ namespace Assets.TowerDefence.Scripts.Utility
 
 			if (allGenericArguments.Count() > 1)
 			{
-				Debug.LogError($"Serializer cannot handle multiple generic arguments, violating Field Name : {fieldInfo.FieldType.Name}");
+				Debug.LogError($"Serialize'r cannot handle multiple generic arguments, violating Field Name : {fieldInfo.FieldType.Name}");
 
 				return false;
 			}

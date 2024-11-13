@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace Assets.TowerDefence.Scripts
+namespace Assets.TowerDefense.Scripts
 {
 	using Agents.Actions.Interfaces;
 

@@ -1,4 +1,4 @@
-﻿namespace Assets.TowerDefence.Scripts.Agents.Actions.BaseAction
+﻿namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 {
 	using Interfaces;
 	using IntializeData;
@@ -11,14 +11,14 @@
 		private IFacingDirection facingDirection;
 
 
-		public void Cancle()
+		public void Cancel()
 		{
 
 		}
 
 		public bool IsFinished()
 		{
-			if(facingDirection.Isfacing)
+			if(facingDirection.IsFacing)
 			{
 				var nextBullet = GameController.Instantiate(amunitionType);
 			}

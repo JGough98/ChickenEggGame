@@ -3,21 +3,20 @@ using System.Linq;
 using UnityEngine.AI;
 
 
-namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
+namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 {
 	using BlackBoard;
 	using InstructionData;
 	using Interfaces;
 	using IntializeData;
-	using System.Diagnostics;
 	using Utility;
 
 
 	// So need to think how this class will work,
 	// Not so sure that combining all actions into one is a good idea here.
-	// Will defintley need a way to track if taget has left sight.
-	// And the two actions rely soley on one another...
-	// Also this class will never be able to be cancalled unless
+	// Will definitely need a way to track if target has left sight.
+	// And the two actions rely solely on one another...
+	// Also this class will never be able to be canceled unless
 	// And calling start here makes no sense
 	public class ShootAtTarget : IInitializeAction<ShootAtTargetInstructions, ShootAtTargeIntializeData>
 	{
@@ -32,16 +31,16 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 		private IAction shootRotate;
 
 
-		public void Intialize(ShootAtTargeIntializeData intializeData)
+		public void Initialize(ShootAtTargeIntializeData initializeData)
 		{
 			UnityEngine.Debug.Log("Look here!!");
 
-			this.blackBoardSceneData = intializeData.BlackBoardSceneData;
-			this.rotateTowardsAction = intializeData.RotateTowardsAction;
-			this.shootAction = intializeData.ShootAction;
-			this.turret = intializeData.Turret;
+			this.blackBoardSceneData = initializeData.BlackBoardSceneData;
+			this.rotateTowardsAction = initializeData.RotateTowardsAction;
+			this.shootAction = initializeData.ShootAction;
+			this.turret = initializeData.Turret;
 
-			rotateTowardsAction.Intialize(new RotateActionSetup(turret, 50));
+			rotateTowardsAction.Initialize(new RotateActionSetup(turret, 50));
 		}
 
 		public bool Start(
@@ -49,7 +48,7 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 		{
 			this.turret = instructions.Turret;
 
-			rotateTowardsAction.Intialize(new RotateActionSetup(turret, 50));
+			rotateTowardsAction.Initialize(new RotateActionSetup(turret, 50));
 
 			return false;
 		}
@@ -68,8 +67,8 @@ namespace Assets.TowerDefence.Scripts.Agents.Actions.ComplexActions
 			return false;
 		}
 
-		public void Cancle()
-			=> shootRotate.Cancle();
+		public void Cancel()
+			=> shootRotate.Cancel();
 
 
 		private bool TryAssignNewTarget()

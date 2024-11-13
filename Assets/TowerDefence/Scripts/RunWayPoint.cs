@@ -1,9 +1,9 @@
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts
+namespace Assets.TowerDefense.Scripts
 {
-	// TODO - Would be nice to set the Ground refrence on reset,
+	// TODO - Would be nice to set the Ground reference on reset,
 	// could do this by searching for nav mesh agents checking their navmesh type.
 	public class RunWayPoint : MonoBehaviour
 	{
@@ -32,7 +32,7 @@ namespace Assets.TowerDefence.Scripts
 		}
 
 
-		public Vector3 RandomWayPointPostion
+		public Vector3 RandomWayPointPosition
 		{
 			get
 			{

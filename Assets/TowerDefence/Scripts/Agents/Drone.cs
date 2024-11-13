@@ -2,7 +2,7 @@
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Agents
+namespace Assets.TowerDefense.Scripts.Agents
 {
 	public interface IAgent
 	{
