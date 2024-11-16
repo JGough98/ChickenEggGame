@@ -1,15 +1,7 @@
-﻿using System;
-using System.Linq;
-using UnityEngine.AI;
-
-
-namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
+﻿namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 {
-	using BlackBoard;
-	using InstructionData;
 	using Interfaces;
 	using IntializeData;
-	using Utility;
 
 
 	// So need to think how this class will work,
@@ -18,69 +10,67 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 	// And the two actions rely solely on one another...
 	// Also this class will never be able to be canceled unless
 	// And calling start here makes no sense
-	public class ShootAtTarget : IInitializeAction<ShootAtTargetInstructions, ShootAtTargeIntializeData>
+	public class ShootAtTarget : IStartAction<ShootAtTargetInitializeData>
 	{
-		private BlackBoardSceneData blackBoardSceneData;
-
-		private Turret turret;
-
 		private IInitializeAction<IPosition, RotateActionSetup> rotateTowardsAction;
 
-		private IStartAction<ShootActionSetup> shootAction;
+		private IInitializeAction<ShootActionStart, IFacingDirection> shootAction;
 
-		private IAction shootRotate;
+		private ITargetSelector targetSelector;
+
+		private ShootActionStart shootParams;
 
 
-		public void Initialize(ShootAtTargeIntializeData initializeData)
+		public bool Start(ShootAtTargetInitializeData instructions)
 		{
-			UnityEngine.Debug.Log("Look here!!");
+			this.shootAction = instructions.ShootAction;
+			this.rotateTowardsAction = instructions.RotateTowardsAction;
+			this.targetSelector = instructions.TargetSelector;
 
-			this.blackBoardSceneData = initializeData.BlackBoardSceneData;
-			this.rotateTowardsAction = initializeData.RotateTowardsAction;
-			this.shootAction = initializeData.ShootAction;
-			this.turret = initializeData.Turret;
+			shootParams = new ShootActionStart(
+				instructions.RateOfFire,
+				instructions.Bullet,
+				instructions.Barrel);
 
-			rotateTowardsAction.Initialize(new RotateActionSetup(turret, 50));
+			return true;
 		}
 
-		public bool Start(
-			ShootAtTargetInstructions instructions)
+		public bool Update()
 		{
-			this.turret = instructions.Turret;
-
-			rotateTowardsAction.Initialize(new RotateActionSetup(turret, 50));
-
+			SetNewActions();
+			UpdateActions();
 			return false;
 		}
 
-		public bool IsFinished()
-		{
-			if(shootRotate == null)
-			{
-				return TryAssignNewTarget();
-			}
-			if (!shootRotate.IsFinished())
-			{
-				return false;
-			}
+		public void Cancel() { }
 
-			return false;
+		private void SetNewActions()
+		{
+			if (!targetSelector.TargetChanged())
+				return;
+
+			if (!targetSelector.TargetInSight)
+			{
+				rotateTowardsAction.Cancel();
+				shootAction.Cancel();
+			}
+			else
+			{
+				rotateTowardsAction.Start(
+					targetSelector.Target);
+				shootAction.Start(
+					shootParams);
+			}
 		}
 
-		public void Cancel()
-			=> shootRotate.Cancel();
-
-
-		private bool TryAssignNewTarget()
+		private void UpdateActions()
 		{
-			if(turret.FieldOfView.Targets.Any())
-			{
-				UnityEngine.Debug.Log("Lets go!!");
-				shootRotate = ActionCombinerUtility.CombinedAction(
-					(rotateTowardsAction, () => rotateTowardsAction.Start(turret.FieldOfView.Targets.First())));
-			}
+			rotateTowardsAction.Update();
 
-			return false;
+			if (targetSelector.TargetInSight)
+			{
+				shootAction.Update();
+			}
 		}
 	}
 }

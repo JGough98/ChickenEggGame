@@ -7,38 +7,66 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 	using Interfaces;
 
 
-	public class ActionRotate : IInitializeAction<IPosition, RotateActionSetup>
+	public class ActionRotate : IInitializeAction<IPosition, RotateActionSetup>, IFacingDirection
 	{
-		private readonly IRotateFunction rotateFunction = new SlerpRotate();
+		private bool followingTarget;
+
+		private bool ignoreRotationChange;
 
 		private float rotationSpeed;
+
+		private readonly IRotateFunction rotateFunction = new SlerpRotate();
 
 		private IRotationSetter agent;
 
 		private IPosition target;
 
+		private Vector3 startingDirection;
+
 
 		private Vector3 NormalizedDirectionToTarget => (target.Position - agent.Position).normalized;
+
+		private Vector3 LookingDirection
+			=> followingTarget
+				? NormalizedDirectionToTarget
+				: startingDirection;
+
+		// TODO - Need to check were in sight of target.
+		public bool IsFacing => followingTarget;
+
+		public Quaternion Rotation => agent.Rotation;
 
 
 		public void Initialize(RotateActionSetup rotationSetup)
 		{
 			this.agent = rotationSetup.Agent;
 			this.rotationSpeed = rotationSetup.RotationSpeed;
+			this.startingDirection = rotationSetup.Agent.Rotation.eulerAngles;
 		}
 
 		public bool Start(IPosition target)
 		{
 			this.target = target;
-			return true;
+			ignoreRotationChange = false;
+			return followingTarget = true;
 		}
 
-		public bool IsFinished()
-			=> agent.SetRotation(
-				NormalizedDirectionToTarget,
+		public bool Update()
+		{
+			if(ignoreRotationChange)
+				return false;
+
+			var rotationChanged = agent.SetRotation(
+				LookingDirection,
 				rotationSpeed,
 				rotateFunction);
 
-		public void Cancel() { }
+			ignoreRotationChange = !followingTarget && !rotationChanged;
+
+			return rotationChanged;
+		}
+
+		public void Cancel()
+			=> followingTarget = false;
 	}
 }

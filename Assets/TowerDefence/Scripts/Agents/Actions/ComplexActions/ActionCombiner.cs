@@ -24,7 +24,7 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 		}
 
 
-		public bool IsFinished()
+		public bool Update()
 		{
 			// Not sure this is quite right, have a feeling the navmesh agent needs a frame to update before confirming?
 			if(!started)
@@ -33,14 +33,14 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 				started = true;
 				return false;
 			}
-			else if (!currentAction.IsFinished())
+			else if (!currentAction.Update())
 			{
-				Debug.Log($"Doing action ({combinedActions.Count()+1})");
+				//Debug.Log($"Doing action ({combinedActions.Count()+1})");
 				return false;
 			}
 			else if (combinedActions.Count() > 0)
 			{
-				Debug.Log($"Finished action ({combinedActions.Count()+1})");
+				//Debug.Log($"Finished action ({combinedActions.Count()+1})");
 				StartNextAction();
 				return false;
 			}
@@ -54,10 +54,10 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 
 		private void StartNextAction()
 		{
-			var actionNum = combinedActions.Count();
+			//var actionNum = combinedActions.Count();
 			var nextAction = combinedActions.Dequeue();
 			currentAction = nextAction.performingAction;
-			Debug.Log($"Starting action ({actionNum})");
+			//Debug.Log($"Starting action ({actionNum})");
 			nextAction.start();
 		}
 	}

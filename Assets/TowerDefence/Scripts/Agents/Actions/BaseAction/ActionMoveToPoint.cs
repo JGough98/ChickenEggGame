@@ -29,7 +29,7 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 			return e;
 		}
 
-		public bool IsFinished()
+		public bool Update()
 		{
 			Debug.DrawRay(travelPosition, Vector3.up, Color.blue, 1.0f);
 			return ReachedDestination;

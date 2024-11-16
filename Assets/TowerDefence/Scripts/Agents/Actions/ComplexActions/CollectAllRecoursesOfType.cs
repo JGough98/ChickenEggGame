@@ -46,9 +46,9 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 			return TryMiningRecourse();
 		}
 
-		public bool IsFinished()
+		public bool Update()
 		{
-			if (!mineThenDepositAction.IsFinished())
+			if (!mineThenDepositAction.Update())
 			{
 				return false;
 			}
@@ -67,8 +67,8 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.ComplexActions
 			var availableDropOffs = blackBoardSceneData.DropOffs
 				.Where(x => x.AcceptsRecourse(recouseToCollect));
 
-			if (!MonoBehaviourUtlility.FindNearest(availableRecourses, agent.transform.position, out var nearestRecourse)
-				|| !MonoBehaviourUtlility.FindNearest(availableDropOffs, nearestRecourse.transform.position, out var nearestDropOff))
+			if (!availableRecourses.FindNearest(agent.transform.position, out var nearestRecourse)
+				|| !availableDropOffs.FindNearest(nearestRecourse.transform.position, out var nearestDropOff))
 				return true;
 
 			// What if were already holding items?

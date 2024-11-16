@@ -742,6 +742,7 @@ MonoBehaviour:
   enamySpawner: {fileID: 227062082}
   enamyExample: {fileID: 8780337025141827166, guid: b73c73030511c834f8c7274315f5d0cb, type: 3}
   turretExample: {fileID: 5313627673180380648}
+  turretBulletExample: {fileID: 3143536901311338152, guid: fd2aa2e12f1339c449f0a099eac7358c, type: 3}
 --- !u!114 &1592909844
 MonoBehaviour:
   m_ObjectHideFlags: 0

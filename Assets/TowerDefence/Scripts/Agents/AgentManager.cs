@@ -23,7 +23,7 @@ namespace Assets.TowerDefense.Scripts
 		{
 			foreach (var agentAction in agentActions)
 			{
-				agentAction.IsFinished();
+				agentAction.Update();
 			}
 		}
 	}

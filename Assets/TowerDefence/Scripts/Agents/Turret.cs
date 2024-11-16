@@ -15,6 +15,9 @@ namespace Assets.TowerDefense.Scripts.Agents
 		[SerializeField]
 		private AmunitionTypeData amunitionType;
 
+		[SerializeField]
+		private Transform barrelRoundStart;
+
 
 		private Vector3 CurrentDirection => Rotation.eulerAngles.normalized;
 
@@ -27,6 +30,8 @@ namespace Assets.TowerDefense.Scripts.Agents
 
 		public AmunitionTypeData AmunitionType => amunitionType;
 
+		public Transform BarrelRoundStart => barrelRoundStart;
+
 
 
 		// Will need to account for how we rotate both the barrel and the turret.
@@ -35,10 +40,17 @@ namespace Assets.TowerDefense.Scripts.Agents
 			float rotationSpeed,
 			IRotateFunction rotateFunction)
 		{
-			transform.rotation = rotateFunction.GetRotation(
+			var directionChanged = (transform.rotation.eulerAngles - targetDirection).sqrMagnitude > 1f;
+
+			if (!directionChanged)
+				return false;
+
+			var nextRotation = rotateFunction.GetRotation(
 				targetDirection,
 				rotationSpeed,
 				Rotation);
+
+			transform.rotation = nextRotation;
 
 			return true;
 		}

@@ -10,7 +10,7 @@
 		/// Used to perform the action and returns true once finished.
 		/// </summary>
 		/// <returns></returns>
-		public bool IsFinished();
+		public bool Update();
 
 		/// <summary>
 		/// Used to cancel the ongoing action.

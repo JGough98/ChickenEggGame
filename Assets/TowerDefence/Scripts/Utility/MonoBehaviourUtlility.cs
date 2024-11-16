@@ -7,7 +7,7 @@ namespace Assets.TowerDefense.Scripts.Utility
 	public static class MonoBehaviourUtlility
 	{
 		public static bool FindNearest<T>(
-			IEnumerable<T> items,
+			this IEnumerable<T> items,
 			Vector3 position,
 			out T closestItem)
 			where T : MonoBehaviour

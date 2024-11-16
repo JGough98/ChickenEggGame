@@ -23,7 +23,7 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 		public void Cancel()
 			=> recourseDeposit.CancleCollecting(recourseClameToken);
 
-		public bool IsFinished()
+		public bool Update()
 		{
 			if (!FinishedGathering)
 				return false;

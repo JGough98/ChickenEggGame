@@ -28,6 +28,9 @@ namespace Assets.TowerDefense.Scripts
 		[SerializeField]
 		private Turret turretExample;
 
+		[SerializeField]
+		private Bullet turretBulletExample;
+
 
 		private AgentManager agentManager = new AgentManager();
 
@@ -46,6 +49,12 @@ namespace Assets.TowerDefense.Scripts
 
 			moveAction.Initialize(
 				agent.NavMeshAgent);
+			rotateAction.Initialize(
+				new RotateActionSetup(
+					turretExample,
+					5));
+			shootAction.Initialize(
+				rotateAction);
 
 			droneGoCollectRecourses.Initialize(
 				new CollectAllRecoursesOfTypeIntializeData(
@@ -58,17 +67,14 @@ namespace Assets.TowerDefense.Scripts
 					ERecourseType.IRON,
 					agent.NavMeshAgent));
 
-			turretShootAction.Initialize(
-				new ShootAtTargeIntializeData(
-					blackBoard.Data,
+			turretShootAction.Start(
+				new ShootAtTargetInitializeData(
 					rotateAction,
 					shootAction,
-					turretExample));
-
-			// NOT NEEDED!
-			turretShootAction.Start(
-				new ShootAtTargetInstructions(
-					turretExample));
+					new TargetSelectorClosest(turretExample.FieldOfView),
+					0.6f,
+					turretBulletExample,
+					turretExample.BarrelRoundStart));
 
 			agentManager.AddAgents(
 				enamySpawner.SpwanAtRunWay(enamyExample),
