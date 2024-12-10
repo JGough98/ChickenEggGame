@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 namespace Assets.TowerDefense.Scripts.InputReader
@@ -9,62 +10,9 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		private GameObject SpawnThing;
 
 
-		/// <summary>
-		/// Return the position of the Mouse in Pixels.
-		/// </summary>
-		private Vector2 PixelMousePosition
-		{
-			get
-			{
-				var mousePosition = Input.mousePosition;
-				return new Vector2(mousePosition.x, mousePosition.y);
-			}
-		}
+		private Ray MouseToCameraPosition => Camera.main.ScreenPointToRay(Input.mousePosition);
 
-		/// <summary>
-		/// Returns the mouse position where it can range from (-1,-1) to (1,1)
-		/// </summary>
-		private Vector2 RelativeMousePosition
-		{
-			get
-			{
-				var screenResolution = Screen.currentResolution;
-
-				var halfScreenWidth = screenResolution.width / 2;
-				var halfScreenHeight = screenResolution.height / 2;
-				var midPoint = new Vector2(halfScreenWidth, halfScreenHeight);
-
-				var mouseDiffrenceToMidPoint = PixelMousePosition - midPoint;
-
-				return new Vector2(
-					mouseDiffrenceToMidPoint.x / halfScreenWidth,
-					mouseDiffrenceToMidPoint.y / halfScreenHeight);
-			}
-		}
-
-		// I GPT'd this, would be very handy to learn though.
-		private Vector3 MouseCameraDirection
-		{
-			get
-			{
-				var relativeMousePosition = RelativeMousePosition;
-				var facingDirection = transform.forward;
-
-				// Find two perpendicular vectors to facingDirection
-				var right = Vector3.Cross(Vector3.up, facingDirection).normalized;
-
-				if (right == Vector3.zero)
-					right = Vector3.Cross(Vector3.forward, facingDirection).normalized;
-
-				var up = Vector3.Cross(facingDirection, right).normalized;
-
-				// Map MousePosition.x to right and MousePosition.y to up, and include the facingDirection
-				var result = facingDirection + relativeMousePosition.x * right + relativeMousePosition.y * up;
-
-				// Normalize the resulting vector if required
-				return result.normalized;
-			}
-		}
+		private bool IsOverUI => EventSystem.current.IsPointerOverGameObject();
 
 
 		public bool MouseWorldPosition(
@@ -79,22 +27,19 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			out Vector3 worldPosition)
 		{
 			worldPosition = Vector3.zero;
-			RaycastHit hit;
 
-			var hitObject = Physics.Raycast(
-				transform.position,
-				MouseCameraDirection,
-				out hit,
+			if (!IsOverUI && Physics.Raycast(
+				MouseToCameraPosition,
+				out var hit,
 				Mathf.Infinity,
-				layerMask);
-
-			if (hitObject)
+				layerMask))
 			{
-				Debug.Log(hit.collider.transform.name);
 				worldPosition = hit.point;
+
+				return true;
 			}
 
-			return hitObject;
+			return false;
 		}
 
 
