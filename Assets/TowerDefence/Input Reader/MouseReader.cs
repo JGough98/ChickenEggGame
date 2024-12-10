@@ -6,7 +6,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 {
 	public delegate void MouseIsInWorldSpace(
 		bool inWorldSpace,
-		Vector3 worldPostion);
+		Vector3 position);
 
 
 	public class MouseReader : MonoBehaviour
@@ -32,7 +32,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 		public Vector3 MouseWorldPosition => mouseWorldPosition;
 
-		public bool MouseOneClicked => Input.GetMouseButtonDown(0);
+		public bool MouseOneClicked => Input.GetMouseButtonDown(0) && !MouseOverUI;
 
 
 		/// <summary>
