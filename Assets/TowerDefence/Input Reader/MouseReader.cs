@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace Assets.TowerDefence.InputReader
+namespace Assets.TowerDefense.Scripts.InputReader
 {
 	public class MouseReader : MonoBehaviour
 	{

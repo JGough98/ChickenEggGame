@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-namespace Assets.TowerDefence.Scripts.Utility
+namespace Assets.TowerDefense.Scripts.Utility
 {
 	public static class Vector3Extensions
 	{
