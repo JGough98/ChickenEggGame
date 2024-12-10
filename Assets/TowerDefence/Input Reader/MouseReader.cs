@@ -4,54 +4,68 @@ using UnityEngine.EventSystems;
 
 namespace Assets.TowerDefense.Scripts.InputReader
 {
+	public delegate void MouseIsInWorldSpace(
+		bool inWorldSpace,
+		Vector3 worldPostion);
+
+
 	public class MouseReader : MonoBehaviour
 	{
-		[SerializeField]
-		private GameObject SpawnThing;
+		public event MouseIsInWorldSpace OnMouseIsInWorldSpace;
 
+
+		[SerializeField]
+		private Camera mainCamera;
+
+		[SerializeField]
+		private LayerMask layer;
+
+		private bool mouseInWorldSpace = true;
+
+		private Vector3 mouseWorldPosition;
+
+
+		private bool MouseOverUI => EventSystem.current.IsPointerOverGameObject();
 
 		private Ray MouseToCameraPosition => Camera.main.ScreenPointToRay(Input.mousePosition);
 
-		private bool IsOverUI => EventSystem.current.IsPointerOverGameObject();
+
+		public Vector3 MouseWorldPosition => mouseWorldPosition;
+
+		public bool MouseOneClicked => Input.GetMouseButtonDown(0);
 
 
-		public bool MouseWorldPosition(
-			string [] masks,
-			out Vector3 worldPosition)
-			=> MouseWorldPosition(
-				LayerMask.GetMask(masks),
-				out worldPosition);
-
-		public bool MouseWorldPosition(
+		/// <summary>
+		/// Gets the position of the first GameObject in which the ray intersects with.
+		/// </summary>
+		/// <param name="layerMask">The layer masks the ray can collide with.</param>
+		/// <param name="mouseWorldPosition">The found colliding world position.</param>
+		/// <returns></returns>
+		public bool MousePositionInWorldSpace(
 			LayerMask layerMask,
-			out Vector3 worldPosition)
+			out Vector3 mouseWorldPosition)
 		{
-			worldPosition = Vector3.zero;
-
-			if (!IsOverUI && Physics.Raycast(
+			var hitSoemthingInWorldspace = Physics.Raycast(
 				MouseToCameraPosition,
 				out var hit,
 				Mathf.Infinity,
-				layerMask))
-			{
-				worldPosition = hit.point;
+				layerMask);
 
-				return true;
-			}
+			mouseWorldPosition = hit.point;
 
-			return false;
+			return hitSoemthingInWorldspace;
 		}
 
 
-		public void Update()
+		private void Update()
 		{
-			if(Input.GetMouseButtonDown(0))
+			var currentlyInWorldSpace = MousePositionInWorldSpace(layer, out mouseWorldPosition)
+				&& !MouseOverUI;
+
+			if (currentlyInWorldSpace != mouseInWorldSpace)
 			{
-				var hitSomeithign = MouseWorldPosition(new string[] { "Ground" }, out var mousePos);
-				if (hitSomeithign)
-				{
-					GameObject.Instantiate(SpawnThing, mousePos, SpawnThing.transform.rotation);
-				}
+				mouseInWorldSpace = currentlyInWorldSpace;
+				OnMouseIsInWorldSpace?.Invoke(mouseInWorldSpace, mouseWorldPosition);
 			}
 		}
 	}
