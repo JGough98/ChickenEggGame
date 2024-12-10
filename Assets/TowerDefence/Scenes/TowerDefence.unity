@@ -152,7 +152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23067572}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -27.47, y: 88.56441, z: -64.23407}
+  m_LocalPosition: {x: -20.5, y: 88.56441, z: -64.23407}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -894,6 +894,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ad2b3620e356048ac29db819de6345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &336390885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 336390886}
+  - component: {fileID: 336390887}
+  m_Layer: 0
+  m_Name: InputReader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &336390886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336390885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.902294, y: 1.0833333, z: 8.886713}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &336390887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336390885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3876924258ad6ea41b61f6667645db7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 739308497}
+  layer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!4 &347802043 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6389240311012395422, guid: ffddf924a32edf541a8b0fc902bdb7b2, type: 3}
@@ -1662,7 +1710,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3876924258ad6ea41b61f6667645db7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnThing: {fileID: 3984334388076560859, guid: b6ee86ce460fd6a429ffa946cd83205c, type: 3}
+  mainCamera: {fileID: 739308497}
+  layer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &762052776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2476,7 +2527,7 @@ Transform:
   - {fileID: 1550301910}
   - {fileID: 927390667}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1032154841
 PrefabInstance:
@@ -2978,6 +3029,7 @@ GameObject:
   - component: {fileID: 1373579767}
   - component: {fileID: 1373579766}
   - component: {fileID: 1373579768}
+  - component: {fileID: 1373579769}
   m_Layer: 5
   m_Name: Object Placer
   m_TagString: Untagged
@@ -3068,6 +3120,20 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 7}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1373579769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373579764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf87470e5489ae499b21ada3d62ccd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mousePlacer: {fileID: 1592909846}
+  convayorBelt: {fileID: 11400000, guid: 897181fc5f0015943ac82d6591f65150, type: 2}
 --- !u!1 &1459811669
 GameObject:
   m_ObjectHideFlags: 0
@@ -3435,6 +3501,7 @@ GameObject:
   - component: {fileID: 1592909845}
   - component: {fileID: 1592909844}
   - component: {fileID: 1592909843}
+  - component: {fileID: 1592909846}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: Untagged
@@ -3455,7 +3522,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1592909843
 MonoBehaviour:
@@ -3474,6 +3541,7 @@ MonoBehaviour:
   enamyExample: {fileID: 8780337025141827166, guid: b73c73030511c834f8c7274315f5d0cb, type: 3}
   turretExample: {fileID: 5313627673180380648}
   turretBulletExample: {fileID: 3143536901311338152, guid: fd2aa2e12f1339c449f0a099eac7358c, type: 3}
+  mousePlacer: {fileID: 1592909846}
 --- !u!114 &1592909844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3505,6 +3573,23 @@ MonoBehaviour:
   - {fileID: 4115949935861607934}
   dropOffs:
   - {fileID: 880818015}
+--- !u!114 &1592909846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592909840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbc689d43c8d59e42abade02faf65b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placedItemsParent: {fileID: 0}
+  mouseReader: {fileID: 739308499}
+  placeMouseLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &1612380936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3720,7 +3805,7 @@ Transform:
   - {fileID: 1934564104}
   - {fileID: 1327808076}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1765927469
 GameObject:
@@ -4400,13 +4485,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1373579769}
+        m_TargetAssemblyTypeName: Assets.TowerDefense.Scripts.ObjectPlacerButtonHandler,
+          Assembly-CSharp
+        m_MethodName: TappedConveyorBelt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
