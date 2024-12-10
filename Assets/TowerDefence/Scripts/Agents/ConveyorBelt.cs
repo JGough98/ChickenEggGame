@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Assets.TowerDefense.Scripts.Agents
 {
 	using TriggerEnterExit;
-	using TowerDefence.Scripts.Utility;
+	using Utility;
 
 
 	public class ConveyorBelt : MonoBehaviour
