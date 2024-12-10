@@ -26,7 +26,6 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		[SerializeField]
 		private LayerMask placeMouseLayer;
 
-
 		/// <summary>
 		/// What item will be placed in the scene.
 		/// </summary>
@@ -37,7 +36,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		private GameObject shownItem = null;
 
 
-		private bool ShouldShow => placedItem != null || shownItem != null;
+		private bool ShowingItem => placedItem != null || shownItem != null;
 
 
 		public void UpdateItem(GameObject shownItem)
@@ -48,10 +47,11 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			GameObject placedItem)
 		{
 			this.shownItem = GameObject.Instantiate(shownItem);
+			shownItem.SetActive(false);
 			this.placedItem = placedItem;
 		}
 
-		public void StopShowing()
+		public void HideItems()
 		{
 			placedItem = null;
 			shownItem = null;
@@ -60,12 +60,12 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 		private void Awake()
 		{
-			SubscribeToOnMouseInWorldSpace(true);
+			SubscribeToOnMouseInWorldSpace();
 		}
 
 		private void Update()
 		{
-			if(!ShouldShow)
+			if(!ShowingItem)
 				return;
 
 			if (mouseReader.MouseOneClicked)
@@ -80,37 +80,38 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 		private void HandleMouseInWorldSpace(
 			bool inWorldSpace,
-			Vector3 worldPosition)
+			Vector3 position)
 		{
-			shownItem.transform.position = worldPosition;
+			if (!ShowingItem)
+				return;
+
+			shownItem.transform.position = position;
 			shownItem.SetActive(inWorldSpace);
 		}
 
 		// TODO - This should account for placing things in a grid like structure.
 		private void PlaceItem(Vector3 position)
-			=> GameObject.Instantiate(
+		{
+			var placed = GameObject.Instantiate(
 				placedItem,
 				position,
 				placedItem.transform.rotation,
 				placedItemsParent);
 
-		private void SubscribeToOnMouseInWorldSpace(bool subscribe)
-		{
-			if (subscribe)
-			{
-				mouseReader.OnMouseIsInWorldSpace += (inWorldSpace, worldPosition) => HandleMouseInWorldSpace(
-					inWorldSpace,
-					worldPosition);
-			}
-			else
-			{
-				mouseReader.OnMouseIsInWorldSpace -= (inWorldSpace, worldPosition) => HandleMouseInWorldSpace(
-					inWorldSpace,
-					worldPosition);
-			}
+			placed.SetActive(true);
 		}
 
+		private void SubscribeToOnMouseInWorldSpace()
+			=> mouseReader.OnMouseIsInWorldSpace += (inWorldSpace, position) => HandleMouseInWorldSpace(
+				inWorldSpace,
+				position);
+
+		private void UnSubscribeToOnMouseInWorldSpace()
+			=> mouseReader.OnMouseIsInWorldSpace -= (inWorldSpace, position) => HandleMouseInWorldSpace(
+				inWorldSpace,
+				position);
+
 		private void Destroy()
-			=> SubscribeToOnMouseInWorldSpace(false);
+			=> UnSubscribeToOnMouseInWorldSpace();
 	}
 }
