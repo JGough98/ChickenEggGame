@@ -74,10 +74,11 @@ namespace Assets.TowerDefense.Scripts
 					new TargetSelectorClosest(turretExample.FieldOfView),
 					0.6f,
 					turretBulletExample,
-					turretExample.BarrelRoundStart));
+					turretExample.BarrelRoundStart,
+					turretExample.Feed));
 
 			agentManager.AddAgents(
-				enamySpawner.SpwanAtRunWay(enamyExample),
+				enamySpawner.SpawnAtRunWay(enamyExample),
 				droneGoCollectRecourses,
 				turretShootAction);
 		}

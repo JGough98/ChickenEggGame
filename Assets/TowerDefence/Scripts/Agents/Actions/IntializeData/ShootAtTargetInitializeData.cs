@@ -42,6 +42,12 @@
 			private set;
 		}
 
+		public AmmunitionFeed Magazine
+		{
+			get;
+			private set;
+		}
+
 
 		public ShootAtTargetInitializeData(
 			IInitializeAction<IPosition, RotateActionSetup> rotateTowardsAction,
@@ -49,7 +55,8 @@
 			ITargetSelector targetSelector,
 			float rateOfFire,
 			Bullet bullet,
-			Transform barrel)
+			Transform barrel,
+			AmmunitionFeed magazine)
 		{
 			this.RotateTowardsAction = rotateTowardsAction;
 			this.ShootAction = shootAction;
@@ -57,6 +64,7 @@
 			this.RateOfFire = rateOfFire;
 			this.Bullet = bullet;
 			this.Barrel = barrel;
+			this.Magazine = magazine;
 		}
 	}
 }

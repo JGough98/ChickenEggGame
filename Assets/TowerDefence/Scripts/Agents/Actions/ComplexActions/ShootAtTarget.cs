@@ -20,12 +20,15 @@
 
 		private ShootActionStart shootParams;
 
+		private AmmunitionFeed magazine;
+
 
 		public bool Start(ShootAtTargetInitializeData instructions)
 		{
 			this.shootAction = instructions.ShootAction;
 			this.rotateTowardsAction = instructions.RotateTowardsAction;
 			this.targetSelector = instructions.TargetSelector;
+			this.magazine = instructions.Magazine;
 
 			shootParams = new ShootActionStart(
 				instructions.RateOfFire,
@@ -67,8 +70,9 @@
 		{
 			rotateTowardsAction.Update();
 
-			if (targetSelector.TargetInSight)
+			if (targetSelector.TargetInSight && magazine.HasAmmunition)
 			{
+				magazine.RemoveRound();
 				shootAction.Update();
 			}
 		}

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.TowerDefense.Scripts.Agents;
+using UnityEngine;
 
 
 namespace Assets.TowerDefense.Scripts
@@ -18,9 +19,10 @@ namespace Assets.TowerDefense.Scripts
 
 		public void OnTriggerEnter(Collider other)
 		{
-			if (other != null && other.tag == "Player")
+			if(other.gameObject.GetComponent<Enamy>() != null)
 			{
-				Destroy(this);
+				Debug.LogError("BOOOOM");
+				Destroy(gameObject);
 			}
 		}
 

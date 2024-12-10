@@ -53,8 +53,12 @@
 				roundPosition.position,
 				amunitionType.transform.rotation);
 
+
+			var direction = facingDirection.Rotation.normalized;
+			var c = direction == Vector3.zero;
+
 			nextBullet.SetVelocity(
-				facingDirection.Rotation.eulerAngles.normalized * 8);
+				facingDirection.Rotation.normalized * 45);
 
 			roundTimer.Start(
 				rateOfFire);

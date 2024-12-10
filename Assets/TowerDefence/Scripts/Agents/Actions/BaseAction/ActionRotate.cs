@@ -24,7 +24,7 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 		private Vector3 startingDirection;
 
 
-		private Vector3 NormalizedDirectionToTarget => (target.Position - agent.Position).normalized;
+		private Vector3 NormalizedDirectionToTarget => (target.Position - agent.Target.position).normalized;
 
 		private Vector3 LookingDirection
 			=> followingTarget
@@ -34,14 +34,14 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 		// TODO - Need to check were in sight of target.
 		public bool IsFacing => followingTarget;
 
-		public Quaternion Rotation => agent.Rotation;
+		public Vector3 Rotation => agent.Target.forward;
 
 
 		public void Initialize(RotateActionSetup rotationSetup)
 		{
 			this.agent = rotationSetup.Agent;
 			this.rotationSpeed = rotationSetup.RotationSpeed;
-			this.startingDirection = rotationSetup.Agent.Rotation.eulerAngles;
+			this.startingDirection = rotationSetup.Agent.Target.rotation.eulerAngles;
 		}
 
 		public bool Start(IPosition target)
@@ -55,7 +55,8 @@ namespace Assets.TowerDefense.Scripts.Agents.Actions.BaseAction
 		{
 			if(ignoreRotationChange)
 				return false;
-
+			
+			// Look into this issue in the future...
 			var rotationChanged = agent.SetRotation(
 				LookingDirection,
 				rotationSpeed,

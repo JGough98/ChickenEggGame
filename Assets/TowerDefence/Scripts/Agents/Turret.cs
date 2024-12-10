@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Assets.TowerDefense.Scripts.Agents
 {
 	using Actions.Interfaces;
+	using TriggerEnterExit;
 	using TowerDefense.ScriptableObjects;
 
 
@@ -18,6 +19,9 @@ namespace Assets.TowerDefense.Scripts.Agents
 		[SerializeField]
 		private Transform barrelRoundStart;
 
+		[SerializeField]
+		private AmmunitionFeed feed;
+
 
 		private Vector3 CurrentDirection => Rotation.eulerAngles.normalized;
 
@@ -31,6 +35,10 @@ namespace Assets.TowerDefense.Scripts.Agents
 		public AmunitionTypeData AmunitionType => amunitionType;
 
 		public Transform BarrelRoundStart => barrelRoundStart;
+
+		public Transform Target => transform;
+
+		public AmmunitionFeed Feed => feed;
 
 
 

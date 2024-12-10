@@ -26,9 +26,9 @@ namespace Assets.TowerDefense.Scripts
 		}
 #endif
 
-		public IAction SpwanAtRunWay<T>(T enamy) where T : MonoBehaviour, IAgent
+		public IAction SpawnAtRunWay<T>(T enemy) where T : MonoBehaviour, IAgent
 		{
-			var newEnamy = GameObject.Instantiate<T>(enamy);
+			var newEnamy = GameObject.Instantiate<T>(enemy);
 
 			return CreateMoveThroughRunWayAction(newEnamy.NavMeshAgent);
 		}
