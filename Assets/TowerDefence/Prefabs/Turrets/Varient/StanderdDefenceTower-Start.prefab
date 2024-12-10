@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1539244711839289945, guid: 1fbda465828e8474db31e8c9029f51b2, type: 3}
       propertyPath: m_Name
-      value: StanderdDefenceTower Variant
+      value: StanderdDefenceTower-Start
       objectReference: {fileID: 0}
     - target: {fileID: 2084642145687740481, guid: 1fbda465828e8474db31e8c9029f51b2, type: 3}
       propertyPath: m_RootOrder
