@@ -9,16 +9,22 @@ namespace Assets.TowerDefense.Scripts.InputReader
 	public class MousePlacer : MonoBehaviour
 	{
 		/// <summary>
-		/// What the object is placed under.
-		/// </summary>
-		[SerializeField]
-		private Transform placedItemsParent;
-
-		/// <summary>
 		/// The mouse input reader.
 		/// </summary>
 		[SerializeField]
 		private MouseReader mouseReader;
+
+		/// <summary>
+		/// Converts world to grid positions.
+		/// </summary>
+		[SerializeField]
+		private GridConvector gridConvector;
+
+		/// <summary>
+		/// What the object is placed under.
+		/// </summary>
+		[SerializeField]
+		private Transform placedItemsParent;
 
 		/// <summary>
 		/// What layers the mouse position ray should account for.
@@ -37,6 +43,8 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 
 		private bool ShowingItem => placedItem != null || shownItem != null;
+
+		private Vector3 MouseGridPosition => gridConvector.ConvertToWorldPosition(mouseReader.MouseWorldPosition);
 
 
 		public void UpdateItem(GameObject shownItem)
@@ -70,11 +78,12 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 			if (mouseReader.MouseOneClicked)
 			{
-				PlaceItem(mouseReader.MouseWorldPosition);
+				PlaceItem(MouseGridPosition);
+				return;
 			}
 			else
 			{
-				shownItem.transform.position = mouseReader.MouseWorldPosition;
+				shownItem.transform.position = MouseGridPosition;
 			}
 		}
 
@@ -89,7 +98,6 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			shownItem.SetActive(inWorldSpace);
 		}
 
-		// TODO - This should account for placing things in a grid like structure.
 		private void PlaceItem(Vector3 position)
 		{
 			var placed = GameObject.Instantiate(

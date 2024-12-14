@@ -904,6 +904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 336390886}
   - component: {fileID: 336390887}
+  - component: {fileID: 336390888}
   m_Layer: 0
   m_Name: InputReader
   m_TagString: Untagged
@@ -919,7 +920,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336390885}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.902294, y: 1.0833333, z: 8.886713}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -942,6 +943,20 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &336390888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336390885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2837ad9de546789409b1ca4f206e6c3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridXSize: 1
+  gridZSize: 1
 --- !u!4 &347802043 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6389240311012395422, guid: ffddf924a32edf541a8b0fc902bdb7b2, type: 3}
@@ -3541,7 +3556,6 @@ MonoBehaviour:
   enamyExample: {fileID: 8780337025141827166, guid: b73c73030511c834f8c7274315f5d0cb, type: 3}
   turretExample: {fileID: 5313627673180380648}
   turretBulletExample: {fileID: 3143536901311338152, guid: fd2aa2e12f1339c449f0a099eac7358c, type: 3}
-  mousePlacer: {fileID: 1592909846}
 --- !u!114 &1592909844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3585,8 +3599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc689d43c8d59e42abade02faf65b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placedItemsParent: {fileID: 0}
   mouseReader: {fileID: 739308499}
+  gridConvector: {fileID: 336390888}
+  placedItemsParent: {fileID: 362213642}
   placeMouseLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -4671,6 +4686,10 @@ PrefabInstance:
     - target: {fileID: 3984334388076560859, guid: b6ee86ce460fd6a429ffa946cd83205c, type: 3}
       propertyPath: m_Name
       value: Drone
+      objectReference: {fileID: 0}
+    - target: {fileID: 3984334388076560859, guid: b6ee86ce460fd6a429ffa946cd83205c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
