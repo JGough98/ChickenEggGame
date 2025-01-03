@@ -21,7 +21,6 @@ namespace Assets.TowerDefense.Scripts
 		{
 			if(other.gameObject.GetComponent<Enamy>() != null)
 			{
-				Debug.LogError("BOOOOM");
 				Destroy(gameObject);
 			}
 		}
