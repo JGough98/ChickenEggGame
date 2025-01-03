@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 
 namespace Assets.TowerDefense.Scripts.InputReader
@@ -15,16 +17,15 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		private MouseReader mouseReader;
 
 		/// <summary>
-		/// Converts world to grid positions.
-		/// </summary>
-		[SerializeField]
-		private GridConvector gridConvector;
-
-		/// <summary>
-		/// What the object is placed under.
+		/// Where instantiated items are placed under.
 		/// </summary>
 		[SerializeField]
 		private Transform placedItemsParent;
+		/// <summary>
+		/// Where shown items are placed under.
+		/// </summary>
+		[SerializeField]
+		private Transform shownItemsParent;
 
 		/// <summary>
 		/// What layers the mouse position ray should account for.
@@ -35,40 +36,55 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		/// <summary>
 		/// What item will be placed in the scene.
 		/// </summary>
-		private GameObject placedItem = null;
+		private GameObject placedItem;
 		/// <summary>
 		/// What item is displayed when moving the mouse.
 		/// </summary>
-		private GameObject shownItem = null;
+		private GameObject shownItem;
+
+		/// <summary>
+		/// The object pool of all currently shown items.
+		/// </summary>
+		private List<GameObject> shownItemsObjectPool = new List<GameObject>();
+
+		/// <summary>
+		/// Used to toggle if an item can be instantiated multiple times in a single drag.
+		/// </summary>
+		private bool itemPermitsDragMultiple;
 
 
 		private bool ShowingItem => placedItem != null || shownItem != null;
 
-		private Vector3 MouseGridPosition => gridConvector.ConvertToWorldPosition(mouseReader.MouseWorldPosition);
-
-
-		public void UpdateItem(GameObject shownItem)
-			=> UpdateItem(shownItem, shownItem);
 
 		public void UpdateItem(
 			GameObject shownItem,
-			GameObject placedItem)
+			GameObject placedItem,
+			bool canDragMultiple,
+			bool canRotate)
 		{
-			this.shownItem = GameObject.Instantiate(shownItem);
-			shownItem.SetActive(false);
 			this.placedItem = placedItem;
+			this.shownItem = GameObject.Instantiate(shownItem);
+			this.itemPermitsDragMultiple = canDragMultiple;
+
+			shownItem.SetActive(false);
+			shownItemsObjectPool.Clear();
 		}
 
 		public void HideItems()
 		{
 			placedItem = null;
 			shownItem = null;
+
+			foreach(var shownItem in shownItemsObjectPool)
+			{
+				shownItem.SetActive(false);
+			}
 		}
 
 
-		private void Awake()
+		private void Start()
 		{
-			SubscribeToOnMouseInWorldSpace();
+			Subscribe();
 		}
 
 		private void Update()
@@ -76,14 +92,69 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			if(!ShowingItem)
 				return;
 
-			if (mouseReader.MouseOneClicked)
+			if (itemPermitsDragMultiple)
 			{
-				PlaceItem(MouseGridPosition);
+				HandleDragInput();
 				return;
 			}
-			else
+
+			HandleMouseInput();
+		}
+
+		private void HandleMouseInput()
+		{
+			if (mouseReader.MouseOneClicked)
 			{
-				shownItem.transform.position = MouseGridPosition;
+				AddPlacedItem(mouseReader.MouseGridPosition, Vector3.zero);
+				return;
+			}
+
+			shownItem.transform.position = mouseReader.MouseGridPosition;
+		}
+
+		private void HandleDragInput()
+		{
+			if(!itemPermitsDragMultiple || !mouseReader.MouseDrag.MouseInDrag)
+			{
+				shownItem.transform.position = mouseReader.MouseGridPosition;
+				return;
+			}
+
+			var mouseDragPositionToDirection = mouseReader.MouseDrag.PositionToDirection.ToList();
+
+			UpdateShownObjectPool(mouseDragPositionToDirection);
+
+			var index = 0;
+			foreach ((var position, var direction) in mouseDragPositionToDirection)
+			{
+				var shownItem = shownItemsObjectPool[index];
+
+				shownItem.transform.position = position;
+				shownItem.transform.rotation = Quaternion.Euler(direction);
+				shownItem.SetActive(true);
+
+				index++;
+			}
+		}
+
+		private void HandleMouseFinishedDragging()
+		{
+			if(!itemPermitsDragMultiple)
+				return;
+
+			var draggedPositions = mouseReader.MouseDrag.MouseGridDragPositions;
+			var draggedDirections = mouseReader.MouseDrag.MouseGridDragDirections;
+
+			if (draggedPositions.Count != draggedDirections.Count)
+			{
+				throw new System.Exception($"DraggedPositions and DridDirections do not align\n" +
+					$"DraggedPositions : {draggedPositions.Count}\n" +
+					$"GridDirections : {draggedDirections.Count}");
+			}
+
+			for(var i = 0; i < draggedPositions.Count; i++)
+			{
+				AddPlacedItem(draggedPositions[i], draggedDirections[i]);
 			}
 		}
 
@@ -98,28 +169,87 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			shownItem.SetActive(inWorldSpace);
 		}
 
-		private void PlaceItem(Vector3 position)
+		private void UpdateShownObjectPool(
+			IEnumerable<(Vector3 position, Vector3 direction)> positionToDirection)
 		{
-			var placed = GameObject.Instantiate(
-				placedItem,
-				position,
-				placedItem.transform.rotation,
-				placedItemsParent);
+			var diffInObjectPool = positionToDirection.Count() - shownItemsObjectPool.Count();
 
-			placed.SetActive(true);
+			if (diffInObjectPool == 0)
+				return;
+
+			if (diffInObjectPool < 0)
+			{
+				for (var i = positionToDirection.Count() - 1; i < shownItemsObjectPool.Count(); i++)
+				{
+					shownItemsObjectPool[i].SetActive(false);
+				}
+
+				return;
+			}
+
+			for (var i = 0; i < diffInObjectPool; i++)
+			{
+				shownItemsObjectPool.Add(AddHiddenShownItem());
+			}
 		}
 
-		private void SubscribeToOnMouseInWorldSpace()
-			=> mouseReader.OnMouseIsInWorldSpace += (inWorldSpace, position) => HandleMouseInWorldSpace(
+		private GameObject AddPlacedItem(
+			Vector3 position,
+			Vector3 rotation)
+			=> InstanciateItem(
+				placedItem,
+				placedItemsParent,
+				position,
+				rotation,
+				shown : true);
+
+		private GameObject AddHiddenShownItem()
+			=> InstanciateItem(
+				shownItem,
+				shownItemsParent,
+				position : Vector3.zero,
+				rotation : Vector3.zero,
+				shown : false);
+
+		private GameObject InstanciateItem(
+			GameObject item,
+			Transform parent,
+			Vector3 position,
+			Vector3 rotation,
+			bool shown)
+		{
+			var placed = GameObject.Instantiate(
+				item,
+				position,
+				item.transform.rotation * Quaternion.Euler(rotation),
+				parent.transform);
+
+			placed.SetActive(shown);
+
+			return placed;
+		}
+
+		private void Subscribe()
+		{
+			mouseReader.OnMouseInWorldSpace += (inWorldSpace, position) => HandleMouseInWorldSpace(
 				inWorldSpace,
 				position);
 
-		private void UnSubscribeToOnMouseInWorldSpace()
-			=> mouseReader.OnMouseIsInWorldSpace -= (inWorldSpace, position) => HandleMouseInWorldSpace(
+			//mouseReader.MouseDrag.OnMouseStartedDrag += () => HandleMouseFinishedDragging();
+			mouseReader.MouseDrag.OnMouseFinishedDrag += () => HandleMouseFinishedDragging();
+		}
+
+		private void UnSubscribe()
+		{
+			mouseReader.OnMouseInWorldSpace -= (inWorldSpace, position) => HandleMouseInWorldSpace(
 				inWorldSpace,
 				position);
+
+			//	mouseReader.MouseDrag.OnMouseStartedDrag += () => HandleMouseFinishedDragging();
+			mouseReader.MouseDrag.OnMouseFinishedDrag += () => HandleMouseFinishedDragging();
+		}
 
 		private void Destroy()
-			=> UnSubscribeToOnMouseInWorldSpace();
+			=> UnSubscribe();
 	}
 }
