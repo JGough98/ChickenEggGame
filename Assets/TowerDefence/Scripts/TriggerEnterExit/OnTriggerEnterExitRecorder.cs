@@ -4,8 +4,13 @@ using UnityEngine;
 
 namespace Assets.TowerDefense.Scripts.TriggerEnterExit
 {
+	public delegate void ItemReceived();
+
 	public class OnTriggerEnterExitRecorder<T> : MonoBehaviour
 	{
+		public event ItemReceived OnItemReceived;
+
+
 		private List<T> targets = new List<T>();
 
 
@@ -13,7 +18,10 @@ namespace Assets.TowerDefense.Scripts.TriggerEnterExit
 
 
 		protected virtual void Add(T target)
-			=> targets.Add(target);
+		{
+			targets.Add(target);
+			OnItemReceived?.Invoke();
+		}
 
 		protected virtual void Remove(T target)
 			=> targets.Remove(target);

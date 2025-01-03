@@ -13,6 +13,7 @@ namespace Assets.TowerDefense.Scripts
 		[SerializeField]
 		private List<FactoryInput> factoryInputs;
 
+
 		[SerializeField]
 		private FactoryOutput factoryOutput;
 

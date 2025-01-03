@@ -16,14 +16,21 @@ namespace Assets.TowerDefense.Scripts.Agents
 		public Rigidbody RigidBody => rigidBody;
 
 
+		/// <summary>
+		/// Used as an event notifier to remove references to the object.
+		/// </summary>
+		public void CallDestroy()
+		{
+			OnDestroyed?.Invoke(this);
+		}
+
+
 		private void Reset()
 		{
 			rigidBody = gameObject.GetComponent<Rigidbody>();
 		}
 
 		private void OnDestroy()
-		{
-			OnDestroyed?.Invoke(this);
-		}
+			=> CallDestroy();
 	}
 }
