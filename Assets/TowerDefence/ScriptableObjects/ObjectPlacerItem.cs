@@ -7,10 +7,21 @@ namespace Assets.TowerDefense.ScriptableObjects
 	public class ObjectPlacerItem : ScriptableObject
 	{
 		[SerializeField]
+		private string uiButtonName;
+
+		[SerializeField]
+		private bool canDragMultiple;
+
+		[SerializeField]
 		private GameObject shown;
 		[SerializeField]
 		public GameObject placed;
 
+
+		public string UIButtonName => uiButtonName;
+
+		public bool CanDragMultiple => canDragMultiple;
+		public bool CanRotate => !canDragMultiple;
 
 		public GameObject Shown => shown;
 		public GameObject Placed => placed;
