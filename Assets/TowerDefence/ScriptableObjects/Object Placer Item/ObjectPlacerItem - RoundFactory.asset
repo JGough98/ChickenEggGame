@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 929c2e899f7b24e49ba32ee3253cb8b9, type: 3}
+  m_Name: ObjectPlacerItem - RoundFactory
+  m_EditorClassIdentifier: 
+  uiButtonName: Round Factory
+  canDragMultiple: 0
+  shown: {fileID: 3738855755837638741, guid: 9227c041a2ce7814b97505aef8db782a, type: 3}
+  placed: {fileID: 3738855755837638741, guid: 9227c041a2ce7814b97505aef8db782a, type: 3}
