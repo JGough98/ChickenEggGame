@@ -222,7 +222,7 @@ MonoBehaviour:
   speed: 2
   angleDirectionThreshold: 10
   decelrationRate: 1
-  normalizedDirectionOfMovement: {x: 0, y: 0, z: 0}
+  normalizedDirectionOfMovement: {x: -1, y: 0, z: 0}
 --- !u!1 &8304268878968439163
 GameObject:
   m_ObjectHideFlags: 0
