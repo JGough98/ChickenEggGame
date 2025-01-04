@@ -70,15 +70,12 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			shownItemsObjectPool.Clear();
 		}
 
-		public void HideItems()
+		public void CancelShown()
 		{
 			placedItem = null;
 			shownItem = null;
 
-			foreach(var shownItem in shownItemsObjectPool)
-			{
-				shownItem.SetActive(false);
-			}
+			HideShownItems();
 		}
 
 
@@ -114,7 +111,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 		private void HandleDragInput()
 		{
-			if(!itemPermitsDragMultiple || !mouseReader.MouseDrag.MouseInDrag)
+			if(!mouseReader.MouseDrag.MouseInDrag)
 			{
 				shownItem.transform.position = mouseReader.MouseGridPosition;
 				return;
@@ -156,6 +153,8 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			{
 				AddPlacedItem(draggedPositions[i], draggedDirections[i]);
 			}
+
+			HideShownItems();
 		}
 
 		private void HandleMouseInWorldSpace(
@@ -174,18 +173,8 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		{
 			var diffInObjectPool = positionToDirection.Count() - shownItemsObjectPool.Count();
 
-			if (diffInObjectPool == 0)
+			if (diffInObjectPool <= 0)
 				return;
-
-			if (diffInObjectPool < 0)
-			{
-				for (var i = positionToDirection.Count() - 1; i < shownItemsObjectPool.Count(); i++)
-				{
-					shownItemsObjectPool[i].SetActive(false);
-				}
-
-				return;
-			}
 
 			for (var i = 0; i < diffInObjectPool; i++)
 			{
@@ -221,12 +210,23 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			var placed = GameObject.Instantiate(
 				item,
 				position,
-				item.transform.rotation * Quaternion.Euler(rotation),
+				Quaternion.LookRotation(rotation),
 				parent.transform);
 
 			placed.SetActive(shown);
 
 			return placed;
+		}
+
+		private void HideShownItems()
+			=> HideShownItems(0);
+
+		private void HideShownItems(int startingIndex)
+		{
+			for (var i = startingIndex; i < shownItemsObjectPool.Count(); i++)
+			{
+				shownItemsObjectPool[i].SetActive(false);
+			}
 		}
 
 		private void Subscribe()
