@@ -44,12 +44,12 @@ namespace Assets.TowerDefense.Scripts
 
 		private void Subscribe()
 		{
-			conveyorItemFieldOfView.OnItemReceived += () => InputRecieved();
+			conveyorItemFieldOfView.OnTargetFound += (ci) => InputRecieved();
 		}
 
 		private void UnSubscribe()
 		{
-			conveyorItemFieldOfView.OnItemReceived -= () => InputRecieved();
+			conveyorItemFieldOfView.OnTargetFound -= (ci) => InputRecieved();
 		}
 
 		private void OnDestroy()

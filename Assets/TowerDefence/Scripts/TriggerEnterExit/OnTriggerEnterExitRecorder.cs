@@ -4,47 +4,28 @@ using UnityEngine;
 
 namespace Assets.TowerDefense.Scripts.TriggerEnterExit
 {
-	public delegate void ItemReceived();
-
-	public class OnTriggerEnterExitRecorder<T> : MonoBehaviour
+	public class OnTriggerEnterExitRecorder<T> : OnTriggerEnterNotifier<T>
 	{
-		public event ItemReceived OnItemReceived;
-
-
 		private List<T> targets = new List<T>();
 
 
 		public IReadOnlyList<T> Targets => targets;
 
 
-		protected virtual void Add(T target)
+		protected override void NotifyFoundTarget(T target)
 		{
 			targets.Add(target);
-			OnItemReceived?.Invoke();
+			base.NotifyFoundTarget(target);
 		}
 
-		protected virtual void Remove(T target)
+		protected virtual void NotifyTargetLost(T target)
 			=> targets.Remove(target);
 
 
-		private void OnTriggerEnter(Collider collision)
-		{
-			if (Found(collision, out var target))
-				Add(target);
-		}
-
 		private void OnTriggerExit(Collider collision)
 		{
-			if (Found(collision, out var target))
-				Remove(target);
-		}
-
-		private bool Found(
-			Collider collision,
-			out T target)
-		{
-			target = collision.gameObject.GetComponent<T>();
-			return target != null;
+			if (FoundTarget(collision, out var target))
+				NotifyTargetLost(target);
 		}
 	}
 }

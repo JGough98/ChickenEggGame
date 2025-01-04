@@ -7,16 +7,16 @@
 		OnTriggerEnterExitRecorder<T>
 		where T : IDestroyedEvent<T>
 	{
-		protected override void Add(T target)
+		protected override void NotifyFoundTarget(T target)
 		{
-			base.Add(target);
-			target.OnDestroyed += (t) => Remove(t);
+			base.NotifyFoundTarget(target);
+			target.OnDestroyed += (t) => NotifyTargetLost(t);
 		}
 
-		protected override void Remove(T target)
+		protected override void NotifyTargetLost(T target)
 		{
-			base.Remove(target);
-			target.OnDestroyed -= (t) => Remove(t);
+			base.NotifyTargetLost(target);
+			target.OnDestroyed -= (t) => NotifyTargetLost(t);
 		}
 	}
 }
