@@ -3,6 +3,12 @@
 
 namespace Assets.TowerDefense.Scripts.Agents
 {
+	public enum ConveyorItemRecourseType
+	{
+		IRON,
+		FIRE
+	}
+
 	[RequireComponent(typeof(Rigidbody))]
 	public class ConveyorItem : MonoBehaviour, IDestroyedEvent<ConveyorItem>
 	{
@@ -12,8 +18,13 @@ namespace Assets.TowerDefense.Scripts.Agents
 		[SerializeField]
 		private Rigidbody rigidBody;
 
+		[SerializeField]
+		private ConveyorItemRecourseType conveyorItemRecourseType;
+
 
 		public Rigidbody RigidBody => rigidBody;
+
+		public ConveyorItemRecourseType ConveyorItemRecourseType => conveyorItemRecourseType;
 
 
 		/// <summary>
