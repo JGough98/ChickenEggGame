@@ -7,6 +7,7 @@ namespace Assets.TowerDefense.Scripts
 	using TriggerEnterExit;
 
 
+	[RequireComponent(typeof(ConveyorItemFieldOfView))]
 	public class FactoryInput : MonoBehaviour
 	{
 		public event AnimationFinished OnInputProcessed;
@@ -54,6 +55,11 @@ namespace Assets.TowerDefense.Scripts
 		private void OnDestroy()
 		{
 			UnSubscribe();
+		}
+
+		private void Reset()
+		{
+			conveyorItemFieldOfView = gameObject.GetComponent<ConveyorItemFieldOfView>();
 		}
 	}
 }
