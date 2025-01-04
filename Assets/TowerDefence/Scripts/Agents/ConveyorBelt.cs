@@ -25,14 +25,21 @@ namespace Assets.TowerDefense.Scripts.Agents
 		[Range(0, 1)]
 		private float decelrationRate;
 
-		[SerializeField]
-		private Vector3 normalizedDirectionOfMovement;
+
+		private Vector3? directionOfMovement;
 
 
-		public void Initialize(Vector3 normalizedDirectionOfMovement)
+		private Vector3 DirectionOfMovement
 		{
-			this.normalizedDirectionOfMovement = normalizedDirectionOfMovement;
+			get
+			{
+				if (directionOfMovement == null)
+					directionOfMovement = transform.TransformDirection(Vector3.forward);
+
+				return directionOfMovement!.Value;
+			}
 		}
+
 
 		public void Update()
 		{
@@ -62,12 +69,12 @@ namespace Assets.TowerDefense.Scripts.Agents
 			var convayorItemMagnitued = convayorItem.velocity.magnitude;
 			
 			var isTooFast = convayorItemMagnitued >= speed;
-			var directionDelta = MathF.Abs(Vector2.Angle(convayorItemDirection, normalizedDirectionOfMovement));
-			var isWrongDirection = MathF.Abs(Vector2.Angle(convayorItemDirection, normalizedDirectionOfMovement)) > angleDirectionThreshold;
+			var directionDelta = MathF.Abs(Vector2.Angle(convayorItemDirection, DirectionOfMovement));
+			var isWrongDirection = MathF.Abs(Vector2.Angle(convayorItemDirection, DirectionOfMovement)) > angleDirectionThreshold;
 			
 			conavyorItemForce = isTooFast
 				? Vector3.zero
-				: speed * normalizedDirectionOfMovement;
+				: speed * DirectionOfMovement;
 
 			if (isWrongDirection)
 			{
