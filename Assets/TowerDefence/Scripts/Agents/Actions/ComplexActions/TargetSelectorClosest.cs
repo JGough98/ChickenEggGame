@@ -6,7 +6,7 @@
 
 	public class TargetSelectorClosest : ITargetSelector
 	{
-		private FieldOfView fieldOfView;
+		private EnemyFieldOfView fieldOfView;
 
 		private Enamy currentTarget;
 
@@ -14,7 +14,7 @@
 		public Enamy Target => currentTarget;
 
 
-		public TargetSelectorClosest(FieldOfView fieldOfView)
+		public TargetSelectorClosest(EnemyFieldOfView fieldOfView)
 		{
 			this.fieldOfView = fieldOfView;
 		}

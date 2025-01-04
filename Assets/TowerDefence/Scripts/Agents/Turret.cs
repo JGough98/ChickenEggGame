@@ -11,7 +11,7 @@ namespace Assets.TowerDefense.Scripts.Agents
 	public class Turret : MonoBehaviour, IRotationSetter
 	{
 		[SerializeField]
-		private FieldOfView fieldOfView;
+		private EnemyFieldOfView fieldOfView;
 
 		[SerializeField]
 		private AmunitionTypeData amunitionType;
@@ -30,7 +30,7 @@ namespace Assets.TowerDefense.Scripts.Agents
 
 		public Vector3 Position => transform.position;
 
-		public FieldOfView FieldOfView => fieldOfView;
+		public EnemyFieldOfView FieldOfView => fieldOfView;
 
 		public AmunitionTypeData AmunitionType => amunitionType;
 
