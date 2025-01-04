@@ -8,10 +8,14 @@ namespace Assets.TowerDefense.Scripts
 	using TriggerEnterExit;
 
 
+	[RequireComponent(typeof(EnemyTriggerNotifier))]
 	public class TrackEnding : MonoBehaviour
 	{
 		[SerializeField]
-		private OnTriggerEnterNotifier<Enamy> enamyNotifier;
+		private HealthBar healthBar;
+
+		[SerializeField]
+		private EnemyTriggerNotifier enamyNotifier;
 
 		private HashSet<Enamy> enamiesPassedFinishLine = new HashSet<Enamy>();
 
@@ -27,12 +31,8 @@ namespace Assets.TowerDefense.Scripts
 			if (enamiesPassedFinishLine.Contains(nextEnemy))
 				return;
 
-			DecrementHealth(nextEnemy.DamageDealt);
-		}
-
-		private void DecrementHealth(int damageDealt)
-		{
-
+			enamiesPassedFinishLine.Add(nextEnemy);
+			healthBar.DecrementHealth(nextEnemy.DamageDealt);
 		}
 
 		private void Subscribe()
@@ -48,6 +48,11 @@ namespace Assets.TowerDefense.Scripts
 		private void OnDestroy()
 		{
 			UnSubscribe();
+		}
+
+		private void Reset()
+		{
+			enamyNotifier = gameObject.GetComponent<EnemyTriggerNotifier>();
 		}
 	}
 }
