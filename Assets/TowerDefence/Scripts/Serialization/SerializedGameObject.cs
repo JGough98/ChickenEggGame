@@ -16,22 +16,22 @@ namespace Assets.TowerDefense.Scripts.Serialization
 
 		[SerializeField]
 		private GameObject serializedObject;
-		private GameObject instanciatedSerilizedObject;
+		private GameObject instanciatedObject;
 
 
 		private GameObject InstanciatedObject
 		{
 			get
 			{
-				if(instanciatedSerilizedObject == null)
+				if(instanciatedObject == null)
 				{
-					instanciatedSerilizedObject = GameObject.Instantiate(
+					instanciatedObject = GameObject.Instantiate(
 						serializedObject,
 						PrefabCopies.Transform);
-					instanciatedSerilizedObject.gameObject.SetActive(false);
+					instanciatedObject.gameObject.SetActive(false);
 				}
 
-				return instanciatedSerilizedObject;
+				return instanciatedObject;
 			}
 		}
 	}
