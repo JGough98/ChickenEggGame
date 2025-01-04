@@ -28,7 +28,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		public bool MouseInDrag => mouseInDrag;
 
 		public IReadOnlyList<Vector3> MouseGridDragPositions => mouseGridDragPositions;
-		public IReadOnlyList<Vector3> MouseGridDragDirections => mouseGridDragPositions;
+		public IReadOnlyList<Vector3> MouseGridDragDirections => mouseGridDragDirections;
 
 
 		public IEnumerable<(Vector3 position, Vector3 direction)> PositionToDirection
@@ -61,9 +61,6 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			mouseInDrag = nextMouseInDrag;
 
 			UpdateDraggedDirection(mouseGridPosition);
-
-			if(mouseGridDragPositions.Any())
-				Debug.Log(mouseGridDragPositions.Select(x => x.ToString()).Aggregate((f, s) => $"{f},{s}"));
 		}
 
 
@@ -118,10 +115,12 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 			var changeInDirection = GetLatestChangeInDirection(
 				mouseGridDragPositionsLength);
-			
-			// Update the starting direction depending on the second added.
-			if (mouseGridDragPositions.Count == 1)
-				mouseGridDragDirections[0] = changeInDirection;
+
+			var previouseDirectionIndex = mouseGridDragDirections.Count - 1;
+
+			// If we've changed direction make sure the previous one follows the next direction.
+			if (mouseGridDragDirections[previouseDirectionIndex] != changeInDirection)
+				mouseGridDragDirections[previouseDirectionIndex] = changeInDirection;
 			
 			mouseGridDragDirections.Add(changeInDirection);
 		}
@@ -139,9 +138,18 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			var previouseGridPosition = mouseGridDragPositions.IndexOf(mouseGridPosition) + 1;
 			var lengthOfRemovedPositions = mouseGridDragPositions.Count - previouseGridPosition;
 
+			RemoveGridRange(previouseGridPosition, lengthOfRemovedPositions);
+		}
+
+		private void RemoveGridRange(int startingIndex, int length)
+		{
 			mouseGridDragPositions.RemoveRange(
-				previouseGridPosition,
-				lengthOfRemovedPositions);
+				startingIndex,
+				length);
+
+			mouseGridDragDirections.RemoveRange(
+				startingIndex,
+				length);
 		}
 	}
 }
