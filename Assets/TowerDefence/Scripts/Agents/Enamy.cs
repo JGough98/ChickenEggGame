@@ -18,10 +18,15 @@ namespace Assets.TowerDefense.Scripts.Agents
 		[SerializeField]
 		private NavMeshAgent agent;
 
+		[SerializeField]
+		private int damageDealt;
+
 
 		public NavMeshAgent NavMeshAgent => agent;
 
 		public Vector3 Position => gameObject.transform.position;
+
+		public int DamageDealt => damageDealt;
 
 
 		public void OnDestroy()

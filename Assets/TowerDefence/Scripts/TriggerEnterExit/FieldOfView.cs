@@ -3,5 +3,5 @@
 	using Agents;
 
 
-	public class FieldOfView : OnTriggerEnterExitRecorder<Enamy> { }
+	public class FieldOfView : DestroyedHandlerOnTriggerEnterExitRecorder<Enamy> { }
 }
