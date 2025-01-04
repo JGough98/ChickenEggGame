@@ -50,7 +50,7 @@ namespace Assets.TowerDefense.Scripts
 			if (!nextButtonState)
 			{
 				previouseObjectPlacerItem = null;
-				mousePlacer.HideItems();
+				mousePlacer.CancelShown();
 				return;
 			}
 
