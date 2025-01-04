@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiButtonName: Elemental Round
   canDragMultiple: 0
-  shown: {fileID: 4342520114492046130, guid: 2eb3b2c78582388408956ec4eba50d57, type: 3}
-  placed: {fileID: 4342520114492046130, guid: 2eb3b2c78582388408956ec4eba50d57, type: 3}
+  shown:
+    serializedObject: {fileID: 4342520114492046130, guid: 2eb3b2c78582388408956ec4eba50d57, type: 3}
+  placed:
+    serializedObject: {fileID: 4342520114492046130, guid: 2eb3b2c78582388408956ec4eba50d57, type: 3}

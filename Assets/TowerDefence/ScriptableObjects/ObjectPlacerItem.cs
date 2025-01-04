@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿// Ignore Spelling: Scriptable
+using UnityEngine;
 
 
 namespace Assets.TowerDefense.ScriptableObjects
 {
+	using Scripts.Serialization;
+
+
 	[CreateAssetMenu(fileName = "ObjectPlacerItem-", menuName = "ScriptableObjects/ObjectPlacerItem", order = 6)]
 	public class ObjectPlacerItem : ScriptableObject
 	{
@@ -13,9 +17,9 @@ namespace Assets.TowerDefense.ScriptableObjects
 		private bool canDragMultiple;
 
 		[SerializeField]
-		private GameObject shown;
+		private SerializedGameObject shown;
 		[SerializeField]
-		public GameObject placed;
+		private SerializedGameObject placed;
 
 
 		public string UIButtonName => uiButtonName;

@@ -63,7 +63,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			bool canRotate)
 		{
 			this.placedItem = placedItem;
-			this.shownItem = GameObject.Instantiate(shownItem);
+			this.shownItem = shownItem;
 			this.itemPermitsDragMultiple = canDragMultiple;
 
 			shownItem.SetActive(false);

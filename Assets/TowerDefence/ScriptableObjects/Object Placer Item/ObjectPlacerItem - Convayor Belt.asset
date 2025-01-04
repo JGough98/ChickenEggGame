@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiButtonName: Convayor Belt
   canDragMultiple: 1
-  shown: {fileID: 8020975696962594298, guid: 8830d9584515bed4a85c069e8d9531fb, type: 3}
-  placed: {fileID: 8020975696962594298, guid: 8830d9584515bed4a85c069e8d9531fb, type: 3}
+  shown:
+    serializedObject: {fileID: 8020975696962594298, guid: 8830d9584515bed4a85c069e8d9531fb, type: 3}
+  placed:
+    serializedObject: {fileID: 8020975696962594298, guid: 8830d9584515bed4a85c069e8d9531fb, type: 3}

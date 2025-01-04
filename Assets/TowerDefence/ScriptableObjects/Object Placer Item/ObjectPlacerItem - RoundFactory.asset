@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiButtonName: Round Factory
   canDragMultiple: 0
-  shown: {fileID: 3738855755837638741, guid: 9227c041a2ce7814b97505aef8db782a, type: 3}
-  placed: {fileID: 3738855755837638741, guid: 9227c041a2ce7814b97505aef8db782a, type: 3}
+  shown:
+    serializedObject: {fileID: 3738855755837638741, guid: 9227c041a2ce7814b97505aef8db782a, type: 3}
+  placed:
+    serializedObject: {fileID: 3738855755837638741, guid: 9227c041a2ce7814b97505aef8db782a, type: 3}
