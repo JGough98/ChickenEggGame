@@ -2,14 +2,26 @@
 using System.Linq;
 using UnityEngine;
 
+using GameObjectPools = Assets.TowerDefense.Scripts.Utility.DataTypes.ObjectPools<UnityEngine.GameObject, Assets.TowerDefense.Scripts.Utility.DataTypes.GameObjectPoolInitializeData, Assets.TowerDefense.Scripts.Utility.DataTypes.GameObjectInitializeData>;
+
 
 namespace Assets.TowerDefense.Scripts.InputReader
 {
+	using Utility.DataTypes;
+	using Utility.GO;
+
+
 	/// <summary>
 	/// Used to place items in the scene displaying a icon of where its going to end up.
 	/// </summary>
 	public class MousePlacer : MonoBehaviour
 	{
+		private readonly GameObjectInitializeData DEFAULT_GAME_OBJECT_INTIALIZE = new GameObjectInitializeData(
+			isActive: false,
+			position: Vector3.zero,
+			rotation: Vector3.zero);
+
+
 		/// <summary>
 		/// The mouse input reader.
 		/// </summary>
@@ -25,13 +37,18 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		/// Where shown items are placed under.
 		/// </summary>
 		[SerializeField]
-		private Transform shownItemsParent;
+		private Transform aboutToBePlacedParent;
 
 		/// <summary>
 		/// What layers the mouse position ray should account for.
 		/// </summary>
 		[SerializeField]
 		private LayerMask placeMouseLayer;
+
+		/// <summary>
+		/// Used to toggle if an item can be instantiated multiple times in a single drag.
+		/// </summary>
+		private bool itemPermitsDragMultiple;
 
 		/// <summary>
 		/// What item will be placed in the scene.
@@ -43,14 +60,9 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		private GameObject shownItem;
 
 		/// <summary>
-		/// The object pool of all currently shown items.
+		/// The object pools of about to be placed items.
 		/// </summary>
-		private List<GameObject> shownItemsObjectPool = new List<GameObject>();
-
-		/// <summary>
-		/// Used to toggle if an item can be instantiated multiple times in a single drag.
-		/// </summary>
-		private bool itemPermitsDragMultiple;
+		private GameObjectPools aboutToBePlaceditems;
 
 
 		private bool ShowingItem => placedItem != null || shownItem != null;
@@ -66,8 +78,10 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			this.shownItem = shownItem;
 			this.itemPermitsDragMultiple = canDragMultiple;
 
-			shownItem.SetActive(false);
-			shownItemsObjectPool.Clear();
+			aboutToBePlaceditems.TryAddNewPool(
+				new GameObjectPoolInitializeData(
+					aboutToBePlacedParent,
+					shownItem));
 		}
 
 		public void CancelShown()
@@ -75,9 +89,14 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			placedItem = null;
 			shownItem = null;
 
-			HideShownItems();
+			aboutToBePlaceditems.Pool.RemoveAll();
 		}
 
+
+		private void Awake()
+		{
+			aboutToBePlaceditems = new GameObjectPools(new GameObjectPoolQueries());
+		}
 
 		private void Start()
 		{
@@ -118,19 +137,21 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			}
 
 			var mouseDragPositionToDirection = mouseReader.MouseDrag.PositionToDirection.ToList();
-
-			UpdateShownObjectPool(mouseDragPositionToDirection);
-
-			var index = 0;
-			foreach ((var position, var direction) in mouseDragPositionToDirection)
+			
+			// Should output the index to start updating rather than updating all.
+			if (UpdateShownObjectPool(mouseDragPositionToDirection))
 			{
-				var shownItem = shownItemsObjectPool[index];
+				var index = 0;
+				foreach ((var position, var direction) in mouseDragPositionToDirection)
+				{
+					var shownItem = aboutToBePlaceditems.Pool[index];
 
-				shownItem.transform.position = position;
-				shownItem.transform.rotation = Quaternion.Euler(direction);
-				shownItem.SetActive(true);
+					shownItem.transform.position = position;
+					shownItem.transform.rotation = Quaternion.Euler(direction);
+					shownItem.SetActive(true);
 
-				index++;
+					index++;
+				}
 			}
 		}
 
@@ -154,7 +175,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 				AddPlacedItem(draggedPositions[i], draggedDirections[i]);
 			}
 
-			HideShownItems();
+			aboutToBePlaceditems.Pool.RemoveAll();
 		}
 
 		private void HandleMouseInWorldSpace(
@@ -168,66 +189,34 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			shownItem.SetActive(inWorldSpace);
 		}
 
-		private void UpdateShownObjectPool(
+		private bool UpdateShownObjectPool(
 			IEnumerable<(Vector3 position, Vector3 direction)> positionToDirection)
 		{
-			var diffInObjectPool = positionToDirection.Count() - shownItemsObjectPool.Count();
+			var diffInObjectPool = positionToDirection.Count() - aboutToBePlaceditems.Pool.Count;
 
-			if (diffInObjectPool <= 0)
-				return;
+			if (diffInObjectPool < 0)
+			{
+				aboutToBePlaceditems.Pool.RemoveItems(aboutToBePlaceditems.Pool.Count + diffInObjectPool);
+				return false;
+			}
 
 			for (var i = 0; i < diffInObjectPool; i++)
 			{
-				shownItemsObjectPool.Add(AddHiddenShownItem());
+				aboutToBePlaceditems.Pool.AddItem(DEFAULT_GAME_OBJECT_INTIALIZE);
 			}
+
+			return true;
 		}
 
 		private GameObject AddPlacedItem(
 			Vector3 position,
 			Vector3 rotation)
-			=> InstanciateItem(
+			=> GameObjectUtility.Instantiate(
 				placedItem,
 				placedItemsParent,
 				position,
 				rotation,
 				shown : true);
-
-		private GameObject AddHiddenShownItem()
-			=> InstanciateItem(
-				shownItem,
-				shownItemsParent,
-				position : Vector3.zero,
-				rotation : Vector3.zero,
-				shown : false);
-
-		private GameObject InstanciateItem(
-			GameObject item,
-			Transform parent,
-			Vector3 position,
-			Vector3 rotation,
-			bool shown)
-		{
-			var placed = GameObject.Instantiate(
-				item,
-				position,
-				Quaternion.LookRotation(rotation),
-				parent.transform);
-
-			placed.SetActive(shown);
-
-			return placed;
-		}
-
-		private void HideShownItems()
-			=> HideShownItems(0);
-
-		private void HideShownItems(int startingIndex)
-		{
-			for (var i = startingIndex; i < shownItemsObjectPool.Count(); i++)
-			{
-				shownItemsObjectPool[i].SetActive(false);
-			}
-		}
 
 		private void Subscribe()
 		{

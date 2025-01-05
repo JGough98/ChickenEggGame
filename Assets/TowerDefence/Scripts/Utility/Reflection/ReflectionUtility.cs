@@ -8,7 +8,7 @@ using UnityObject = UnityEngine.Object;
 using Object = System.Object;
 
 
-namespace Assets.TowerDefense.Scripts.Utility
+namespace Assets.TowerDefense.Scripts.Utility.Reflection
 {
 	public static class ReflectionUtility
 	{

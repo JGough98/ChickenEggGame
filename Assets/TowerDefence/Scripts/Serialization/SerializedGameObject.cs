@@ -28,6 +28,7 @@ namespace Assets.TowerDefense.Scripts.Serialization
 					instanciatedObject = GameObject.Instantiate(
 						serializedObject,
 						PrefabCopies.Transform);
+
 					instanciatedObject.gameObject.SetActive(false);
 				}
 

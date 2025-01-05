@@ -4,7 +4,7 @@ using System.Reflection;
 namespace Assets.TowerDefense.Scripts.Extensions
 {
 	using BlackBoard;
-	using Utility;
+	using Utility.Reflection;
 
 
 	public static class BlackBoardExtensions

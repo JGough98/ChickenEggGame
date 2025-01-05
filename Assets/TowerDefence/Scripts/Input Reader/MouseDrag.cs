@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -113,8 +113,7 @@ namespace Assets.TowerDefense.Scripts.InputReader
 				return;
 			}
 
-			var changeInDirection = GetLatestChangeInDirection(
-				mouseGridDragPositionsLength);
+			var changeInDirection = GetLatestChangeInDirection(mouseGridDragPositionsLength);
 
 			var previouseDirectionIndex = mouseGridDragDirections.Count - 1;
 
