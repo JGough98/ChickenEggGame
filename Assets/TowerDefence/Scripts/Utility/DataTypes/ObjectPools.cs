@@ -17,6 +17,7 @@ namespace Assets.TowerDefense.Scripts.Utility.DataTypes
 
 		private U currentPoolType;
 
+		// Surely we can add null-able type to above to remove need of this?
 		private bool initialized;
 
 
