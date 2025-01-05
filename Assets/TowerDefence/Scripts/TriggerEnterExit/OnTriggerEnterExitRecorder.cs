@@ -12,20 +12,20 @@ namespace Assets.TowerDefense.Scripts.TriggerEnterExit
 		public IReadOnlyList<T> Targets => targets;
 
 
-		protected override void NotifyFoundTarget(T target)
+		protected override void FoundTarget(T target)
 		{
 			targets.Add(target);
-			base.NotifyFoundTarget(target);
+			base.FoundTarget(target);
 		}
 
-		protected virtual void NotifyTargetLost(T target)
+		protected virtual void TargetLost(T target)
 			=> targets.Remove(target);
 
 
 		private void OnTriggerExit(Collider collision)
 		{
-			if (FoundTarget(collision, out var target))
-				NotifyTargetLost(target);
+			if (IsTarget(collision, out var target))
+				TargetLost(target);
 		}
 	}
 }

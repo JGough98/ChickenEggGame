@@ -11,7 +11,7 @@ namespace Assets.TowerDefense.Scripts.TriggerEnterExit
 		public event TargetFound<T> OnTargetFound;
 
 
-		protected bool FoundTarget(
+		protected bool IsTarget(
 			Collider collision,
 			out T target)
 		{
@@ -19,14 +19,14 @@ namespace Assets.TowerDefense.Scripts.TriggerEnterExit
 			return target != null;
 		}
 
-		protected virtual void NotifyFoundTarget(T target)
+		protected virtual void FoundTarget(T target)
 			=> OnTargetFound?.Invoke(target);
 
 
 		private void OnTriggerEnter(Collider collision)
 		{
-			if (FoundTarget(collision, out var target))
-				NotifyFoundTarget(target);
+			if (IsTarget(collision, out var target))
+				FoundTarget(target);
 		}
 	}
 }
