@@ -20,6 +20,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: IronInput
       objectReference: {fileID: 0}
+    - target: {fileID: 3865098419052155438, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+      propertyPath: recoursefactory
+      value: 5553837957536808964
+      objectReference: {fileID: 0}
+    - target: {fileID: 3865098419052155438, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+      propertyPath: factoryProduction
+      value: 
+      objectReference: {fileID: 6388081916740768973}
+    - target: {fileID: 3865098419052155438, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+      propertyPath: managedReferences[5553837957536808964]
+      value: Assembly-CSharp Assets.TowerDefense.Scripts.ElementalAmmunitionCreator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459620102444285079, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459620102444285079, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 7420967733504375946, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -67,5 +87,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1472779814521419513, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6388081916740768973}
   m_SourcePrefab: {fileID: 100100000, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+--- !u!1 &3738855755837638741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1472779814521419513, guid: e958e057b2812e64ca2c2373a6fce3cb, type: 3}
+  m_PrefabInstance: {fileID: 2851703184782180012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6388081916740768973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3738855755837638741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b4c9097a9962f43a4ea1732083284b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  producedAmmunition:
+  - {fileID: 11400000, guid: eea1f90d121a7c346987ce4c94700e83, type: 2}
+  - {fileID: 11400000, guid: 16343b5f497dbef41b993529bd6a7a2d, type: 2}
