@@ -125,12 +125,8 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 		private void HandleRoatateItem(Vector3 rotateDirection)
 		{
-			var t1 = shownItem.transform.rotation.eulerAngles;
-			var t2 = placedItem.transform.rotation.eulerAngles;
 			shownItem.transform.rotation *= Quaternion.Euler(rotateDirection);
 			placedItem.transform.rotation *= Quaternion.Euler(rotateDirection);
-			var t3 = shownItem.transform.rotation.eulerAngles;
-			var t4 = placedItem.transform.rotation.eulerAngles;
 		}
 
 		private void HandleMouseInput()
