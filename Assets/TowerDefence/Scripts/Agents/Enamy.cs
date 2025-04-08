@@ -29,9 +29,11 @@ namespace Assets.TowerDefense.Scripts.Agents
 		public int DamageDealt => damageDealt;
 
 
+		void IDestroyedEvent<Enamy>.InvokeDestroyedEvent()
+			=> OnDestroyed?.Invoke(this);
+
+
 		public void OnDestroy()
-		{
-			OnDestroyed?.Invoke(this);
-		}
+			=> OnDestroyed?.Invoke(this);
 	}
 }

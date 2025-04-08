@@ -7,14 +7,14 @@ namespace Assets.TowerDefense.Scripts.Utility
 {
 	public static class Guard
 	{
-		public static bool GuardAgainstNull<T>(
+		public static bool GuardEnumrableAgainstNull<T>(
 			this IEnumerable<T> items)
-			=> IsNotNull(items)
+			=> GuardAgainstNull(items)
 				&& ContainNoNullElements(items)
 				&& ContainsElements(items);
 
 
-		private static bool IsNotNull<T>(
+		public static bool GuardAgainstNull<T>(
 			this T item)
 		{
 			var isNull = item == null;

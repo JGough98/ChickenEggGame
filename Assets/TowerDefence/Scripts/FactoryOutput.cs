@@ -1,35 +1,22 @@
-﻿using Assets.TowerDefense.Scripts.Agents;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Assets.TowerDefense.Scripts
 {
-	// So this should take in a set of recourses and check if this can be combined together.
-	public class FactoryRecourseBuilder
-	{
-		public bool CanCreate(
-			List<ConveyorItemRecourseType> conveyorItemRecourseTypes,
-			out GameObject createdObject)
-		{
-			var canCreate = false;
-			createdObject = null;
-
-
-			return canCreate;
-		}
-	}
-
-
 	public class FactoryOutput : MonoBehaviour
 	{
+		[SerializeField]
+		private GameObject outputPosition;
+
+
 		public event AnimationFinished OnOutputProcessed;
 
 
-		public void PerformOutputAnimation()
+		public GameObject OutputPosition => outputPosition;
+
+
+		public void PerformOutputAnimation(GameObject createdObject)
 		{
-
-
 			OnOutputProcessed?.Invoke();
 		}
 	}

@@ -3,12 +3,6 @@
 
 namespace Assets.TowerDefense.Scripts.Agents
 {
-	public enum ConveyorItemRecourseType
-	{
-		IRON,
-		FIRE
-	}
-
 	[RequireComponent(typeof(Rigidbody))]
 	public class ConveyorItem : MonoBehaviour, IDestroyedEvent<ConveyorItem>
 	{
@@ -19,12 +13,12 @@ namespace Assets.TowerDefense.Scripts.Agents
 		private Rigidbody rigidBody;
 
 		[SerializeField]
-		private ConveyorItemRecourseType conveyorItemRecourseType;
+		private ConveyorItemType conveyorItemRecourseType;
 
 
 		public Rigidbody RigidBody => rigidBody;
 
-		public ConveyorItemRecourseType ConveyorItemRecourseType => conveyorItemRecourseType;
+		public ConveyorItemType ConveyorItemRecourseType => conveyorItemRecourseType;
 
 
 		/// <summary>
@@ -43,5 +37,8 @@ namespace Assets.TowerDefense.Scripts.Agents
 
 		private void OnDestroy()
 			=> CallDestroy();
+
+		void IDestroyedEvent<ConveyorItem>.InvokeDestroyedEvent()
+			=> OnDestroyed?.Invoke(this);
 	}
 }

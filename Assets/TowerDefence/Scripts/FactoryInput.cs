@@ -1,33 +1,36 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 
 namespace Assets.TowerDefense.Scripts
 {
-	using System.Linq;
+	using Agents;
 	using TriggerEnterExit;
 
+
+	public delegate void OnRecourseReceived(FactoryInput factoryInput);
 
 	[RequireComponent(typeof(ConveyorItemFieldOfView))]
 	public class FactoryInput : MonoBehaviour
 	{
-		public event AnimationFinished OnInputProcessed;
-
-
 		[SerializeField]
 		private ConveyorItemFieldOfView conveyorItemFieldOfView;
 
-		private bool recieved;
+		private ConveyorItem recieved;
 
 
-		public bool Received => recieved;
+		public event AnimationFinished OnInputProcessed;
+
+		public event OnRecourseReceived OnInputReceived;
+
+
+		public ConveyorItem Received => recieved;
 
 
 		public void PerformInputAnimation()
 		{
-			var nextInput = conveyorItemFieldOfView.Targets.First();
-
-			nextInput.CallDestroy();
-			recieved = conveyorItemFieldOfView.Targets.Any();
+			// Do the animation here.
+			conveyorItemFieldOfView.Targets.First().SafeDestroy();
 			OnInputProcessed?.Invoke();
 		}
 
@@ -37,20 +40,17 @@ namespace Assets.TowerDefense.Scripts
 			Subscribe();
 		}
 
-		private void InputRecieved()
+		private void InputRecieved(ConveyorItem conveyorItem)
 		{
-			recieved = true;
+			recieved = conveyorItem;
+			OnInputReceived?.Invoke(this);
 		}
 
 		private void Subscribe()
-		{
-			conveyorItemFieldOfView.OnTargetFound += (ci) => InputRecieved();
-		}
+			=> conveyorItemFieldOfView.OnTargetFound += (ci) => InputRecieved(ci);
 
 		private void UnSubscribe()
-		{
-			conveyorItemFieldOfView.OnTargetFound -= (ci) => InputRecieved();
-		}
+			=> conveyorItemFieldOfView.OnTargetFound -= (ci) => InputRecieved(ci);
 
 		private void OnDestroy()
 		{

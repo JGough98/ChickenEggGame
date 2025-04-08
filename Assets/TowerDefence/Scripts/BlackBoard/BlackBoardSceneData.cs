@@ -31,9 +31,9 @@ namespace Assets.TowerDefense.Scripts.BlackBoard
 #if UNITY_EDITOR
 		private void Awake()
 		{
-			recourses.GuardAgainstNull();
-			drones.GuardAgainstNull();
-			dropOffs.GuardAgainstNull();
+			recourses.GuardEnumrableAgainstNull();
+			drones.GuardEnumrableAgainstNull();
+			dropOffs.GuardEnumrableAgainstNull();
 		}
 #endif
 

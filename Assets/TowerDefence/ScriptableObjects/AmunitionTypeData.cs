@@ -3,7 +3,7 @@
 
 namespace Assets.TowerDefense.ScriptableObjects
 {
-	[CreateAssetMenu(fileName = "AmunitionTypeData-", menuName = "ScriptableObjects/AmunitionType", order = 5)]
+	[CreateAssetMenu(fileName = "AmunitionTypeData-", menuName = "ScriptableObjects/AmmunitionType", order = 5)]
 	public class AmunitionTypeData : ScriptableObject
 	{
 		[SerializeField]

@@ -22,7 +22,7 @@ namespace Assets.TowerDefense.Scripts
 #if UNITY_EDITOR
 		private void Awake()
 		{
-			runWayPoints.GuardAgainstNull();
+			runWayPoints.GuardEnumrableAgainstNull();
 		}
 #endif
 

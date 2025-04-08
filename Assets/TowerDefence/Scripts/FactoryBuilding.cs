@@ -5,57 +5,69 @@ using UnityEngine;
 
 namespace Assets.TowerDefense.Scripts
 {
+	using Agents;
+	using Utility;
+
+
 	public delegate void AnimationFinished();
 
 
-	public class FactoryBuilding : MonoBehaviour
+	public partial class FactoryBuilding : MonoBehaviour
 	{
 		[SerializeField]
-		private List<FactoryInput> factoryInputs;
+		private FactoryProduction factoryProduction;
 
+		[SerializeField]
+		private List<FactoryInput> factoryInputs;
 
 		[SerializeField]
 		private FactoryOutput factoryOutput;
 
+		private List<ConveyorItemType> recourses;
+
+		private int inputsProcessed;
+
 		private bool processing;
-
-		private int factoryInputCount;
-
-		private int factoryInputsCompleted;
-
-
-		private bool StartNextItemProcess => !processing && factoryInputs.All(x => x.Received);
 
 
 		private void Awake()
 		{
-			factoryInputCount = factoryInputs.Count();
+			recourses = new List<ConveyorItemType>();
+#if UNITY_EDITOR
+			Guard.GuardAgainstNull(factoryProduction);
+#endif
+			factoryProduction.Initialize(gameObject, factoryOutput.OutputPosition);
 			Subscribe();
-		}
-
-		private void Update()
-		{
-			if(StartNextItemProcess)
-				StartInputProcessing();
-		}
-
-		private void StartInputProcessing()
-		{
-			processing = true;
-			foreach (var factoryInput in factoryInputs)
-			{
-				factoryInput.PerformInputAnimation();
-			}
 		}
 
 		private void AwaitUntilAllInputsProcessed()
 		{
-			factoryInputsCompleted++;
+			inputsProcessed++;
+			if (inputsProcessed != recourses.Count)
+				return;
 
-			if(factoryInputsCompleted == factoryInputCount)
+			var nextRecourse = factoryProduction.CreateRecourse(recourses);
+			factoryOutput.PerformOutputAnimation(nextRecourse);
+		}
+
+		private void HandleNextFactoryInput(FactoryInput factoryInput)
+		{
+			var nextRecourse = factoryInput.Received.ConveyorItemRecourseType;
+
+			if (factoryProduction.ShouldReject(recourses, nextRecourse))
 			{
-				factoryOutput.PerformOutputAnimation();
-				factoryInputsCompleted = 0;
+				factoryInput.Received.SafeDestroy();
+				return;
+			}
+
+			recourses.Add(nextRecourse);
+
+			if (recourses.Count == factoryProduction.TotalInputsRequired)
+			{
+				foreach(var fi in factoryInputs)
+				{
+					fi.PerformInputAnimation();
+				}
 			}
 		}
 
@@ -63,6 +75,7 @@ namespace Assets.TowerDefense.Scripts
 		{
 			foreach (var factoryInput in factoryInputs)
 			{
+				factoryInput.OnInputReceived += (fi) => HandleNextFactoryInput(fi);
 				factoryInput.OnInputProcessed += () => AwaitUntilAllInputsProcessed();
 			}
 		}
@@ -71,15 +84,18 @@ namespace Assets.TowerDefense.Scripts
 		{
 			foreach (var factoryInput in factoryInputs)
 			{
+				factoryInput.OnInputReceived -= (fi) => HandleNextFactoryInput(fi);
 				factoryInput.OnInputProcessed -= () => AwaitUntilAllInputsProcessed();
 			}
 		}
+
 
 		private void OnDestroy()
 			=> UnSubscribe();
 
 		private void Reset()
 		{
+			factoryProduction = gameObject.GetComponent<FactoryProduction>();
 			factoryInputs = gameObject.GetComponentsInChildren<FactoryInput>().ToList();
 			factoryOutput = gameObject.GetComponentInChildren<FactoryOutput>();
 		}
