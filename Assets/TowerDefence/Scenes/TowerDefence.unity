@@ -937,6 +937,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 336390886}
+  - component: {fileID: 336390889}
   - component: {fileID: 336390887}
   - component: {fileID: 336390888}
   m_Layer: 0
@@ -992,6 +993,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridXSize: 1
   gridZSize: 1
+--- !u!114 &336390889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336390885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fc75eeb49f907049a82f34c987e5691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RotateLeft: 113
+  RotateRight: 101
 --- !u!4 &347802043 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6389240311012395422, guid: ffddf924a32edf541a8b0fc902bdb7b2, type: 3}
@@ -2902,6 +2917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbc689d43c8d59e42abade02faf65b2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keyBoardReader: {fileID: 336390889}
   mouseReader: {fileID: 336390887}
   placedItemsParent: {fileID: 1784950857}
   aboutToBePlacedParent: {fileID: 1706943556}

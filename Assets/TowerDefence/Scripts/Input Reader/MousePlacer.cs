@@ -23,6 +23,12 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 
 		/// <summary>
+		/// The keyboard input reader.
+		/// </summary>
+		[SerializeField]
+		private KeyBoardReader keyBoardReader;
+
+		/// <summary>
 		/// The mouse input reader.
 		/// </summary>
 		[SerializeField]
@@ -117,11 +123,21 @@ namespace Assets.TowerDefense.Scripts.InputReader
 			HandleMouseInput();
 		}
 
+		private void HandleRoatateItem(Vector3 rotateDirection)
+		{
+			var t1 = shownItem.transform.rotation.eulerAngles;
+			var t2 = placedItem.transform.rotation.eulerAngles;
+			shownItem.transform.rotation *= Quaternion.Euler(rotateDirection);
+			placedItem.transform.rotation *= Quaternion.Euler(rotateDirection);
+			var t3 = shownItem.transform.rotation.eulerAngles;
+			var t4 = placedItem.transform.rotation.eulerAngles;
+		}
+
 		private void HandleMouseInput()
 		{
 			if (mouseReader.MouseOneClicked)
 			{
-				AddPlacedItem(mouseReader.MouseGridPosition, Vector3.zero);
+				AddPlacedItem(mouseReader.MouseGridPosition);
 				return;
 			}
 
@@ -165,7 +181,8 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 			if (draggedPositions.Count != draggedDirections.Count)
 			{
-				throw new System.Exception($"DraggedPositions and DridDirections do not align\n" +
+				throw new System.Exception(
+					$"DraggedPositions and DridDirections do not align\n" +
 					$"DraggedPositions : {draggedPositions.Count}\n" +
 					$"GridDirections : {draggedDirections.Count}");
 			}
@@ -209,6 +226,14 @@ namespace Assets.TowerDefense.Scripts.InputReader
 		}
 
 		private GameObject AddPlacedItem(
+			Vector3 position)
+			=> GameObjectUtility.Instantiate(
+				placedItem,
+				placedItemsParent,
+				position,
+				shown: true);
+
+		private GameObject AddPlacedItem(
 			Vector3 position,
 			Vector3 rotation)
 			=> GameObjectUtility.Instantiate(
@@ -224,8 +249,8 @@ namespace Assets.TowerDefense.Scripts.InputReader
 				inWorldSpace,
 				position);
 
-			//mouseReader.MouseDrag.OnMouseStartedDrag += () => HandleMouseFinishedDragging();
 			mouseReader.MouseDrag.OnMouseFinishedDrag += () => HandleMouseFinishedDragging();
+			keyBoardReader.OnRotateTapped += HandleRoatateItem;
 		}
 
 		private void UnSubscribe()
@@ -234,8 +259,8 @@ namespace Assets.TowerDefense.Scripts.InputReader
 				inWorldSpace,
 				position);
 
-			//	mouseReader.MouseDrag.OnMouseStartedDrag += () => HandleMouseFinishedDragging();
 			mouseReader.MouseDrag.OnMouseFinishedDrag += () => HandleMouseFinishedDragging();
+			keyBoardReader.OnRotateTapped -= HandleRoatateItem;
 		}
 
 		private void Destroy()
