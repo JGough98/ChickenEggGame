@@ -241,21 +241,17 @@ namespace Assets.TowerDefense.Scripts.InputReader
 
 		private void Subscribe()
 		{
-			mouseReader.OnMouseInWorldSpace += (inWorldSpace, position) => HandleMouseInWorldSpace(
-				inWorldSpace,
-				position);
+			mouseReader.OnMouseInWorldSpace += HandleMouseInWorldSpace;
+			mouseReader.MouseDrag.OnMouseFinishedDrag += HandleMouseFinishedDragging;
 
-			mouseReader.MouseDrag.OnMouseFinishedDrag += () => HandleMouseFinishedDragging();
 			keyBoardReader.OnRotateTapped += HandleRoatateItem;
 		}
 
 		private void UnSubscribe()
 		{
-			mouseReader.OnMouseInWorldSpace -= (inWorldSpace, position) => HandleMouseInWorldSpace(
-				inWorldSpace,
-				position);
+			mouseReader.OnMouseInWorldSpace -= HandleMouseInWorldSpace;
+			mouseReader.MouseDrag.OnMouseFinishedDrag += HandleMouseFinishedDragging;
 
-			mouseReader.MouseDrag.OnMouseFinishedDrag += () => HandleMouseFinishedDragging();
 			keyBoardReader.OnRotateTapped -= HandleRoatateItem;
 		}
 

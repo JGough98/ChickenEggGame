@@ -38,7 +38,7 @@ namespace Assets.TowerDefense.Scripts.Agents
 		private void OnDestroy()
 			=> CallDestroy();
 
-		void IDestroyedEvent<ConveyorItem>.InvokeDestroyedEvent()
+		void IDestroyedEvent.InvokeDestroyedEvent()
 			=> OnDestroyed?.Invoke(this);
 	}
 }

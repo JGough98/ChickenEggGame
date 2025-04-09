@@ -6,10 +6,9 @@ namespace Assets.TowerDefense.Scripts.Utility
 	public class Timer : ITimer
 	{
 		private float startingTime;
-
 		private float waitTime;
 
-		private bool isPaused;
+		private bool isPaused = true;
 
 
 		private float TimeRemaning => Time.unscaledTime - startingTime;

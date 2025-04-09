@@ -19,7 +19,9 @@ namespace Assets.TowerDefense.Scripts.TriggerEnterExit
 		}
 
 		protected virtual void TargetLost(T target)
-			=> targets.Remove(target);
+		{
+			targets.Remove(target);
+		}
 
 
 		private void OnTriggerExit(Collider collision)

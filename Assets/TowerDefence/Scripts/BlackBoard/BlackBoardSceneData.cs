@@ -6,6 +6,7 @@ namespace Assets.TowerDefense.Scripts.BlackBoard
 {
 	using Agents;
 	using Extensions;
+	using System.Linq;
 	using Utility;
 
 
@@ -20,6 +21,9 @@ namespace Assets.TowerDefense.Scripts.BlackBoard
 		[SerializeField]
 		private List<DepositDropOff> dropOffs;
 
+		[SerializeField]
+		private List<ParentSpawner> parentSpawns;
+
 
 		public IReadOnlyList<RecourseDeposit> Recourses => recourses;
 
@@ -27,10 +31,17 @@ namespace Assets.TowerDefense.Scripts.BlackBoard
 
 		public IReadOnlyList<DepositDropOff> DropOffs => dropOffs;
 
+		public IReadOnlyList<ParentSpawner> ParentSpawns => parentSpawns;
+
 
 #if UNITY_EDITOR
 		private void Awake()
 		{
+			parentSpawns.GuardEnumrableAgainstNull();
+			if(parentSpawns.Select(x => x.SpawnType).GroupBy(x => x).Where(x => x.Count() > 1).Any())
+			{
+				throw new System.Exception("Multiple spawn types added.");
+			}
 			recourses.GuardEnumrableAgainstNull();
 			drones.GuardEnumrableAgainstNull();
 			dropOffs.GuardEnumrableAgainstNull();

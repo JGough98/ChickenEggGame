@@ -9,6 +9,7 @@ namespace Assets.TowerDefense.Scripts
 	using Agents.Actions.ComplexActions;
 	using Agents.Actions.InstructionData;
 	using Agents.Actions.IntializeData;
+	using Assets.TowerDefense.Scripts.Utility.GO;
 	using BlackBoard;
 	using Enums;
 
@@ -34,6 +35,14 @@ namespace Assets.TowerDefense.Scripts
 
 		private AgentManager agentManager = new AgentManager();
 
+
+		public void Awake()
+		{
+			GameObjectUtility.Intialize(blackBoard.Data.ParentSpawns
+				.ToDictionary(
+					k => k.SpawnType,
+					v => v.Parent));
+		}
 
 		public void Start()
 		{

@@ -30,7 +30,7 @@ namespace Assets.TowerDefense.Scripts
 		public void PerformInputAnimation()
 		{
 			// Do the animation here.
-			conveyorItemFieldOfView.Targets.First().SafeDestroy();
+			conveyorItemFieldOfView.Targets.Last().SafeDestroy();
 			OnInputProcessed?.Invoke();
 		}
 

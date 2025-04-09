@@ -3,7 +3,7 @@
 
 namespace Assets.TowerDefense.Scripts
 {
-	public class FactoryOutput : MonoBehaviour
+	public class RecourseOutput : MonoBehaviour
 	{
 		[SerializeField]
 		private GameObject outputPosition;

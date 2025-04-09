@@ -21,13 +21,11 @@ namespace Assets.TowerDefense.Scripts
 		private List<FactoryInput> factoryInputs;
 
 		[SerializeField]
-		private FactoryOutput factoryOutput;
+		private RecourseOutput factoryOutput;
 
 		private List<ConveyorItemType> recourses;
 
 		private int inputsProcessed;
-
-		private bool processing;
 
 
 		private void Awake()
@@ -48,6 +46,8 @@ namespace Assets.TowerDefense.Scripts
 
 			var nextRecourse = factoryProduction.CreateRecourse(recourses);
 			factoryOutput.PerformOutputAnimation(nextRecourse);
+			recourses.Clear();
+			inputsProcessed = 0;
 		}
 
 		private void HandleNextFactoryInput(FactoryInput factoryInput)
@@ -97,7 +97,7 @@ namespace Assets.TowerDefense.Scripts
 		{
 			factoryProduction = gameObject.GetComponent<FactoryProduction>();
 			factoryInputs = gameObject.GetComponentsInChildren<FactoryInput>().ToList();
-			factoryOutput = gameObject.GetComponentInChildren<FactoryOutput>();
+			factoryOutput = gameObject.GetComponentInChildren<RecourseOutput>();
 		}
 	}
 }

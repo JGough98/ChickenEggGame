@@ -16,6 +16,9 @@ namespace Assets.TowerDefense.Scripts
 	public class FactoryPlacerButtonHandler : MonoBehaviour
 	{
 		[SerializeField]
+		private DeleteIcon deleteIcon;
+
+		[SerializeField]
 		private List<ObjectPlacerItem> placedObjects;
 
 		[SerializeField]

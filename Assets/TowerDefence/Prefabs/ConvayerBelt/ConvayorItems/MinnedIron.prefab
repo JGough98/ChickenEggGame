@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2516660328413967828
 MeshFilter:
@@ -147,4 +147,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 15164912038859863}
-  conveyorItemRecourseType: 0
+  conveyorItemRecourseType: {fileID: 11400000, guid: b9c737948cfb3d34483b153ff9d11bfd, type: 2}
